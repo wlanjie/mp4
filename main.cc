@@ -529,6 +529,7 @@ static void writeSamples(Track* track, SampleDescription* sdesc, ByteStream* out
     DataBuffer data;
     Ordinal index = 0;
     while (SUCCEEDED(track->readSample(index, sample, data))) {
+        printf("pts = %lld, dts = %lld current = %lld duration = %d \n", sample.getCts(), sample.getDts(), ConvertTime(sample.getCts(), track->getMediaTimeScale(), 1000), sample.getDuration());
         writeSample(data, prefix, nalu_length_size, output);
         index++;
     }
@@ -536,7 +537,7 @@ static void writeSamples(Track* track, SampleDescription* sdesc, ByteStream* out
 
 
 int readVideo() {
-    const char* input_name = "/Users/wlanjie/Desktop/mp4.mp4";
+    const char* input_name = "/Users/wlanjie/Desktop/testfile.mp4";
     // create the input stream
     ByteStream* input = NULL;
     Result result = FileByteStream::create(input_name, FileByteStream::STREAM_MODE_READ, input);
@@ -566,6 +567,9 @@ int readVideo() {
 
     switch(sampleDescription->getType()) {
         case SampleDescription::TYPE_AVC:
+            Ordinal index;
+            track->getSampleIndexForTimeStampMs(5000, index);
+            printf("width = %d height = %d index = %d\n", track->getWidth()/65536, track->getHeight()/65536, index);
             writeSamples(track, sampleDescription, output);
             break;
     }

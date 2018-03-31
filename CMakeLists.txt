@@ -61,7 +61,7 @@ set(SOURCE_FILES
         bit_stream.cc
         sl_config_descriptor.cc
         mp4_audio_info.cc
-        es_descriptor.cc)
+        es_descriptor.cc sample_source.cpp sample_source.h)
 add_library(mp4 ${SOURCE_FILES})
 
 string(TOLOWER sample binary_name)

@@ -883,7 +883,6 @@ void AvcFrameParser::checkIfAccessUnitIsCompleted(AvcFrameParser::AccessUnitInfo
     this->accessUnitData.Clear();
     ++this->totalAccessUnitCount;
 
-    printf("frameNum = %d\n", frameNum);
     this->prevFrameNum = frameNum;
     this->prevFrameNumOffset = frameNumOffset;
     if (this->nalRefIdc) {
