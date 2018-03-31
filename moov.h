@@ -8,6 +8,8 @@
 #include "container.h"
 #include "trak.h"
 
+namespace mp4 {
+
 class Moov : public Container {
 
 public:
@@ -31,5 +33,5 @@ private:
     UI32 timeScale;
 };
 
-
+}
 #endif //MP4_MOOVATOM_H

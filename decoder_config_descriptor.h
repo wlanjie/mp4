@@ -5,8 +5,9 @@
 #ifndef MP4_DECODERCONFIGDESCRIPTOR_H
 #define MP4_DECODERCONFIGDESCRIPTOR_H
 
-
 #include "decoder_specificinfo_descriptor.h"
+
+namespace mp4 {
 
 const UI08 DESCRIPTOR_TAG_DECODER_CONFIG = 0x04;
 
@@ -34,5 +35,5 @@ private:
 
 };
 
-
+}
 #endif //MP4_DECODERCONFIGDESCRIPTOR_H

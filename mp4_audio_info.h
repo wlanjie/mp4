@@ -8,6 +8,8 @@
 #include "types.h"
 #include "databuffer.h"
 
+namespace mp4 {
+
 class Mp4AudioDsiParser {
 public:
     Mp4AudioDsiParser(const UI08* data, Size dataSize) : data(data, dataSize), position(0) {}
@@ -72,4 +74,5 @@ private:
     Result parseExtension(Mp4AudioDsiParser& parser);
 };
 
+}
 #endif //MP4_MP4AUDIOINFO_H

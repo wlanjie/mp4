@@ -8,6 +8,8 @@
 #include "atom.h"
 #include "array.h"
 
+namespace mp4 {
+
 class Ftyp : public Atom {
 public:
 
@@ -34,5 +36,5 @@ private:
     Array<UI32> compatibleBrands;
 };
 
-
+}
 #endif //MP4_FTYPATOM_H

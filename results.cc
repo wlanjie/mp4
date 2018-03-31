@@ -4,6 +4,8 @@
 
 #include "results.h"
 
+namespace mp4 {
+// TODO name
 const char*
 ResultText(int result)
 {
@@ -33,4 +35,6 @@ ResultText(int result)
         case ERROR_NOT_ENOUGH_DATA:                 return "ERROR_NOT_ENOUGH_DATA";
         default:                                        return "UNKNOWN";
     }
+}
+
 }

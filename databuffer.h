@@ -8,6 +8,8 @@
 #include "types.h"
 #include "results.h"
 
+namespace mp4 {
+
 class DataBuffer {
 public:
     // constructors & destructor
@@ -59,5 +61,5 @@ private:
     DataBuffer &operator=(const DataBuffer &other);
 };
 
-
+}
 #endif //MP4_DATABUFFER_H

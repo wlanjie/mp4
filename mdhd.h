@@ -8,6 +8,7 @@
 
 #include "atom.h"
 
+namespace mp4 {
 /**
  * 定义了媒体的特性，例如time scale和duration。
  */
@@ -40,5 +41,5 @@ private:
     String language;
 };
 
-
+}
 #endif //MP4_MDHDATOM_H

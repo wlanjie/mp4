@@ -4,6 +4,8 @@
 
 #include "debug.h"
 
+namespace mp4 {
+
 void debug(const char* format, ...) {
     va_list args;
     va_start(args, format);
@@ -11,4 +13,6 @@ void debug(const char* format, ...) {
     FormatStringVN(buffer, sizeof(buffer), format, args);
     printf("%s", buffer);
     va_end(args);
+}
+
 }

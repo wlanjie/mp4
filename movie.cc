@@ -4,6 +4,8 @@
 
 #include "movie.h"
 
+namespace mp4 {
+
 class TrackFinderById : public List<Track>::Item::Finder {
 public:
     TrackFinderById(UI32 trackId) : trackId(trackId) {}
@@ -104,4 +106,6 @@ bool Movie::hasFragments() {
         return false;
     }
     return moov->getChild(ATOM_TYPE_MVEX) != nullptr;
+}
+
 }

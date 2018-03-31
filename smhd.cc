@@ -4,6 +4,8 @@
 
 #include "smhd.h"
 
+namespace mp4 {
+
 Smhd *Smhd::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -37,4 +39,6 @@ Result Smhd::writeFields(ByteStream &stream) {
     result = stream.writeUI16(reserved);
     if (FAILED(result)) return result;
     return SUCCESS;
+}
+
 }

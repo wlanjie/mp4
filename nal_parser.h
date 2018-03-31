@@ -5,8 +5,9 @@
 #ifndef MP4_NALPARSER_H
 #define MP4_NALPARSER_H
 
-
 #include "databuffer.h"
+
+namespace mp4 {
 
 class NalParser {
 public:
@@ -61,5 +62,5 @@ protected:
 
 };
 
-
+}
 #endif //MP4_NALPARSER_H

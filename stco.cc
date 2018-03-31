@@ -5,6 +5,8 @@
 #include "stco.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stco *Stco::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -84,4 +86,6 @@ Result Stco::adjustChunkOffsets(int delta) {
         entries[i] += delta;
     }
     return SUCCESS;
+}
+
 }

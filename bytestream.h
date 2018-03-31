@@ -11,6 +11,8 @@
 #include "results.h"
 #include "databuffer.h"
 
+namespace mp4 {
+
 class ByteStream : public Referenceable {
 public:
     virtual Result readPartial(void *buffer, Size bytesToRead, Size& bytesRead) = 0;
@@ -113,4 +115,5 @@ private:
     Cardinal    m_ReferenceCount;
 };
 
+}
 #endif //MP4_BYTESTREAM_H

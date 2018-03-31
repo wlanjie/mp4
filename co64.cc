@@ -5,6 +5,8 @@
 #include "co64.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Co64 *Co64::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -77,4 +79,6 @@ Result Co64::adjustChunkOffset(SI64 delta) {
         entries[i] += delta;
     }
     return SUCCESS;
+}
+
 }

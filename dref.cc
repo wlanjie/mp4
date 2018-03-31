@@ -4,6 +4,8 @@
 
 #include "dref.h"
 
+namespace mp4 {
+
 Dref *Dref::create(Size size, ByteStream &stream, AtomFactory &factory) {
     UI08 version;
     UI32 flags;
@@ -48,4 +50,6 @@ Result Dref::writeFields(ByteStream &stream) {
     Result result = stream.writeUI32(children.ItemCount());
     if (FAILED(result)) return result;
     return children.Apply(AtomListWriter(stream));
+}
+
 }

@@ -7,6 +7,8 @@
 #include "decoder_config_descriptor.h"
 #include "es_descriptor.h"
 
+namespace mp4 {
+
 Result DescriptorFactory::createDescriptionFromStream(ByteStream &stream, Descriptor *&descriptor) {
     Result result;
     descriptor = nullptr;
@@ -48,4 +50,6 @@ Result DescriptorFactory::createDescriptionFromStream(ByteStream &stream, Descri
     }
     stream.seek(offset + headerSize + payloadSize);
     return 0;
+}
+
 }

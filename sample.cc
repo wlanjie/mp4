@@ -4,6 +4,8 @@
 
 #include "sample.h"
 
+namespace mp4 {
+
 Sample::Sample() :
         dataStream(nullptr),
         offset(0),
@@ -115,4 +117,6 @@ void Sample::reset() {
     dts = 0;
     ctsDelta = 0;
     sync = false;
+}
+
 }

@@ -5,9 +5,10 @@
 #ifndef MP4_STZ2_H
 #define MP4_STZ2_H
 
-
 #include "atom.h"
 #include "array.h"
+
+namespace mp4 {
 
 class Stz2 : public Atom {
 public:
@@ -26,5 +27,5 @@ private:
     Array<UI32> entries;
 };
 
-
+}
 #endif //MP4_STZ2_H

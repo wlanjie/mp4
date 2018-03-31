@@ -1,62 +1,18 @@
-/*****************************************************************
-|
-|    AP4 - Bitstream Utility
-|
-|    Copyright 2002-2008 Axiomatic Systems, LLC
-|
-|
-|    This file is part of Bento4/AP4 (MP4 Atom Processing Library).
-|
-|    Unless you have obtained Bento4 under a difference license,
-|    this version of Bento4 is Bento4|GPL.
-|    Bento4|GPL is free software; you can redistribute it and/or modify
-|    it under the terms of the GNU General Public License as published by
-|    the Free Software Foundation; either version 2, or (at your option)
-|    any later version.
-|
-|    Bento4|GPL is distributed in the hope that it will be useful,
-|    but WITHOUT ANY WARRANTY; without even the implied warranty of
-|    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-|    GNU General Public License for more details.
-|
-|    You should have received a copy of the GNU General Public License
-|    along with Bento4|GPL; see the file COPYING.  If not, write to the
-|    Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA
-|    02111-1307, USA.
-|
-****************************************************************/
-
-/*----------------------------------------------------------------------
-|   For efficiency reasons, this bitstream library only handles
-|   data buffers that are a power of 2 in size
-+---------------------------------------------------------------------*/
-
-/*----------------------------------------------------------------------
-|   includes
-+---------------------------------------------------------------------*/
 #include "bit_stream.h"
 #include "utils.h"
 
-/*----------------------------------------------------------------------
-|   BitStream::BitStream
-+---------------------------------------------------------------------*/
+namespace mp4 {
+// TODO name
 BitStream::BitStream() {
     m_Buffer = new UI08[BITSTREAM_BUFFER_SIZE];
     Reset();
 }
 
-/*----------------------------------------------------------------------
-|   BitStream::~BitStream
-+---------------------------------------------------------------------*/
 BitStream::~BitStream() {
     delete[] m_Buffer;
 }
 
-/*----------------------------------------------------------------------
-|   BitStream::Reset
-+---------------------------------------------------------------------*/
-Result
-BitStream::Reset() {
+Result BitStream::Reset() {
     m_In = 0;
     m_Out = 0;
     m_BitsCached = 0;
@@ -66,22 +22,14 @@ BitStream::Reset() {
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   BitStream::ByteAlign
-+---------------------------------------------------------------------*/
-Result
-BitStream::ByteAlign() {
+Result BitStream::ByteAlign() {
     unsigned int to_flush = m_BitsCached & 7;
     if (to_flush > 0) SkipBits(to_flush);
 
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   BitStream::GetContiguousBytesFree
-+---------------------------------------------------------------------*/
-Size
-BitStream::GetContiguousBytesFree() {
+Size BitStream::GetContiguousBytesFree() {
     return
             (m_In < m_Out) ?
             (m_Out - m_In - 1) :
@@ -89,22 +37,14 @@ BitStream::GetContiguousBytesFree() {
              (BITSTREAM_BUFFER_SIZE - m_In));
 }
 
-/*----------------------------------------------------------------------
-|   BitStream_GetBytesFree
-+---------------------------------------------------------------------*/
-Size
-BitStream::GetBytesFree() {
+Size BitStream::GetBytesFree() {
     return
             (m_In < m_Out) ?
             (m_Out - m_In - 1) :
             (BITSTREAM_BUFFER_SIZE + (m_Out - m_In) - 1);
 }
 
-/*----------------------------------------------------------------------+
-|    BitStream::WriteBytes
-+----------------------------------------------------------------------*/
-Result
-BitStream::WriteBytes(const UI08 *bytes,
+Result BitStream::WriteBytes(const UI08 *bytes,
                       Size byte_count) {
     /* check parameters */
     if (byte_count == 0) return SUCCESS;
@@ -136,33 +76,21 @@ BitStream::WriteBytes(const UI08 *bytes,
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   BitStream_GetContiguousBytesAvailable
-+---------------------------------------------------------------------*/
-Size
-BitStream::GetContiguousBytesAvailable() {
+Size BitStream::GetContiguousBytesAvailable() {
     return
             (m_Out <= m_In) ?
             (m_In - m_Out) :
             (BITSTREAM_BUFFER_SIZE - m_Out);
 }
 
-/*----------------------------------------------------------------------
-|   BitStream::GetBytesAvailable
-+---------------------------------------------------------------------*/
-Size
-BitStream::GetBytesAvailable() {
+Size BitStream::GetBytesAvailable() {
     return
             (m_Out <= m_In) ?
             (m_In - m_Out) :
             (m_In + (BITSTREAM_BUFFER_SIZE - m_Out));
 }
 
-/*----------------------------------------------------------------------+
-|    BitStream::ReadBytes
-+----------------------------------------------------------------------*/
-Result
-BitStream::ReadBytes(UI08 *bytes,
+Result BitStream::ReadBytes(UI08 *bytes,
                      Size byte_count) {
     if (byte_count == 0 || bytes == NULL) {
         return ERROR_INVALID_PARAMETERS;
@@ -200,11 +128,7 @@ BitStream::ReadBytes(UI08 *bytes,
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------+
-|    BitStream::PeekBytes
-+----------------------------------------------------------------------*/
-Result
-BitStream::PeekBytes(UI08 *bytes,
+Result BitStream::PeekBytes(UI08 *bytes,
                      Size byte_count) {
     int bits_cached_byte;
 
@@ -246,11 +170,9 @@ BitStream::PeekBytes(UI08 *bytes,
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------+
-|    BitStream::SkipBytes
-+----------------------------------------------------------------------*/
-Result
-BitStream::SkipBytes(Size byte_count) {
+Result BitStream::SkipBytes(Size byte_count) {
     BITSTREAM_POINTER_ADD(m_Out, byte_count);
     return SUCCESS;
+}
+
 }

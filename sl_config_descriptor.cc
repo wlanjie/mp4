@@ -4,6 +4,8 @@
 
 #include "sl_config_descriptor.h"
 
+namespace mp4 {
+
 SLConfigDescriptor::SLConfigDescriptor(Size headerSize) :
         Descriptor(DESCRIPTOR_TAG_SL_CONFIG, headerSize, 1),
         predefined(2) {
@@ -13,4 +15,6 @@ SLConfigDescriptor::SLConfigDescriptor(Size headerSize) :
 Result SLConfigDescriptor::writeFields(ByteStream &stream) {
     stream.writeUI08(predefined);
     return SUCCESS;
+}
+
 }

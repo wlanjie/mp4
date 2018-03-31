@@ -8,6 +8,8 @@
 #include "array.h"
 #include "atom.h"
 
+namespace mp4 {
+
 /**
  * Sync Sample Box
  */
@@ -25,5 +27,5 @@ private:
     Ordinal LooupCache;
 };
 
-
+}
 #endif //MP4_STSS_H

@@ -5,6 +5,8 @@
 #include "avcc.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Avcc *Avcc::create(Size size, ByteStream &stream) {
     unsigned int payloadSize = size - ATOM_HEADER_SIZE;
     DataBuffer payloadData(payloadSize);
@@ -185,4 +187,6 @@ void Avcc::updateRawBytes() {
         CopyMemory(&payload[cursor], pictureParamters[i].getData(), paramLength);
         cursor += paramLength;
     }
+}
+
 }

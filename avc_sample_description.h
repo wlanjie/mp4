@@ -5,9 +5,10 @@
 #ifndef MP4_AVCSAMPLEDESCRIPTION_H
 #define MP4_AVCSAMPLEDESCRIPTION_H
 
-
 #include "sampledescription.h"
 #include "avcc.h"
+
+namespace mp4 {
 
 class AvcSampleDescription : public SampleDescription,
                              public VideoSampleDescription {
@@ -56,5 +57,5 @@ private:
     Avcc* avcc;
 };
 
-
+}
 #endif //MP4_AVCSAMPLEDESCRIPTION_H

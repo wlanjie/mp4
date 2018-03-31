@@ -5,6 +5,8 @@
 #include "stz2.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stz2 *Stz2::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -164,4 +166,6 @@ Result Stz2::addEntry(UI32 size) {
         size32 += fieldsSize / 8;
     }
     return 0;
+}
+
 }

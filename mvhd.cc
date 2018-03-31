@@ -5,6 +5,8 @@
 #include "mvhd.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Mvhd *Mvhd::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -120,4 +122,6 @@ Result Mvhd::writeFields(ByteStream &stream) {
 
 UI32 Mvhd::getDurationMs() {
     return timeScale ? (UI32) ConvertTime(duration, timeScale, 1000) : 0;
+}
+
 }

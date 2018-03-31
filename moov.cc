@@ -4,6 +4,8 @@
 
 #include "moov.h"
 
+namespace mp4 {
+
 class TrakCollector : public List<Atom>::Item::Operator {
 public:
     TrakCollector(List<Trak>* traks) : traks(traks) {}
@@ -59,4 +61,6 @@ void Moov::onChildRemoved(Atom *atom) {
         }
     }
     Container::onChildRemoved(atom);
+}
+
 }

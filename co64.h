@@ -7,6 +7,7 @@
 
 #include "atom.h"
 
+namespace mp4 {
 /**
  * Chunk Offset Box
  * 64-bit chunk offset
@@ -28,5 +29,5 @@ private:
     UI32 entryCount;
 };
 
-
+}
 #endif //MP4_CO64_H

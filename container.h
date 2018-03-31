@@ -8,6 +8,8 @@
 #include "atom.h"
 #include "atomfactory.h"
 
+namespace mp4 {
+
 class Container : public Atom, public AtomParent {
 public:
     // class methods
@@ -60,5 +62,5 @@ protected:
                       UI64 size);
 };
 
-
+}
 #endif //MP4_CONTAINERATOM_H

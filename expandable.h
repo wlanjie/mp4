@@ -5,10 +5,11 @@
 #ifndef MP4_EXPANDABLE_H
 #define MP4_EXPANDABLE_H
 
-
 #include "types.h"
 #include "bytestream.h"
 #include "atom.h"
+
+namespace mp4 {
 
 class Expandable {
 public:
@@ -32,5 +33,5 @@ protected:
     Size payloadSize;
 };
 
-
+}
 #endif //MP4_EXPANDABLE_H

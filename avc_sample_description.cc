@@ -6,6 +6,8 @@
 #include "utils.h"
 #include "sample_entry.h"
 
+namespace mp4 {
+
 AvcSampleDescription::AvcSampleDescription(UI32 format,
                                            UI16 width,
                                            UI16 height,
@@ -67,4 +69,6 @@ Result AvcSampleDescription::getCodecString(String &codec) {
     FormatString(workspace, sizeof(workspace), "%s.%02X%02X%02X", coding, getProfile(), getProfileCompatibility(), getLevel());
     codec = workspace;
     return SUCCESS;
+}
+
 }

@@ -5,6 +5,8 @@
 #include "expandable.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Size Expandable::minHeaderSize(Size payloadSize) {
     return 2 + (payloadSize / 128);
 }
@@ -59,4 +61,6 @@ Result Expandable::write(ByteStream &stream) {
     // write the fields
     writeFields(stream);
     return SUCCESS;
+}
+
 }

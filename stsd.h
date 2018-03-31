@@ -9,6 +9,8 @@
 #include "sampletable.h"
 #include "sample_entry.h"
 
+namespace mp4 {
+
 class SampleTable;
 /**
  * sample description atom
@@ -31,5 +33,5 @@ private:
     Array<SampleDescription*> sampleDescriptions;
 };
 
-
+}
 #endif //MP4_STSD_H

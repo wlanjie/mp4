@@ -5,7 +5,6 @@
 #ifndef MP4_SAMPLETABLE_H
 #define MP4_SAMPLETABLE_H
 
-
 #include "types.h"
 #include "container.h"
 #include "sampledescription.h"
@@ -18,6 +17,8 @@
 #include "stsd.h"
 #include "stss.h"
 #include "co64.h"
+
+namespace mp4 {
 
 class SampleTable {
 public:
@@ -32,5 +33,5 @@ public:
     virtual Ordinal getNearestSyncSampleIndex(Ordinal index, bool before = true) = 0;
 };
 
-
+}
 #endif //MP4_SAMPLETABLE_H

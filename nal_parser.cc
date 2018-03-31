@@ -5,6 +5,8 @@
 #include "nal_parser.h"
 #include "utils.h"
 
+namespace mp4 {
+
 void NalParser::unescape(DataBuffer &data) {
     unsigned int zeroCount = 0;
     unsigned int bytesRemoved = 0;
@@ -122,4 +124,6 @@ Result NalParser::reset() {
     zeroTrail = 0;
     buffer.setDataSize(0);
     return SUCCESS;
+}
+
 }

@@ -4,6 +4,8 @@
 
 #include "mp4.h"
 
+namespace mp4 {
+
 class TrackFinderById : public List<Track>::Item::Finder {
 public:
     TrackFinderById(UI32 trackId) : trackId(trackId) {}
@@ -98,4 +100,6 @@ Track *Mp4::getTrack(UI32 trackId) {
 
 Track *Mp4::getTrack(Track::Type type, Ordinal index) {
     return nullptr;
+}
+
 }

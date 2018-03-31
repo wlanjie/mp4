@@ -5,6 +5,8 @@
 #include "ctts.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Ctts *Ctts::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -93,4 +95,6 @@ Result Ctts::getCtsOffset(Ordinal sample, UI32 &ctsOffset) {
         sampleStart += entry.sampleCount;
     }
     return ERROR_OUT_OF_RANGE;
+}
+
 }

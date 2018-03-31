@@ -5,10 +5,11 @@
 #ifndef MP4_TRACK_H
 #define MP4_TRACK_H
 
-
 #include "types.h"
 #include "trak.h"
 #include "moov.h"
+
+namespace mp4 {
 
 const UI32 TRACK_DEFAULT_MOVIE_TIMESCALE = 1000;
 const UI32 TRACK_FLAG_ENABLED = 0x0001;
@@ -83,5 +84,5 @@ private:
     bool sampleTableIsOwned;
 };
 
-
+}
 #endif //MP4_TRACK_H

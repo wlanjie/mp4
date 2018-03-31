@@ -5,8 +5,9 @@
 #ifndef MP4_SLCONFIGDESCRIPTOR_H
 #define MP4_SLCONFIGDESCRIPTOR_H
 
-
 #include "descriptor.h"
+
+namespace mp4 {
 
 const UI08 DESCRIPTOR_TAG_SL_CONFIG = 0x06;
 
@@ -19,5 +20,5 @@ private:
     UI08 predefined;
 };
 
-
+}
 #endif //MP4_SLCONFIGDESCRIPTOR_H

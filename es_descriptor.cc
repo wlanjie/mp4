@@ -5,6 +5,8 @@
 #include "es_descriptor.h"
 #include "descriptor_factory.h"
 
+namespace mp4 {
+
 EsDescriptor::EsDescriptor(UI16 esId) :
         Descriptor(DESCRIPTOR_TAG_ES, 2, 2 + 1),
         esId(esId),
@@ -126,4 +128,6 @@ const DecoderConfigDescriptor *EsDescriptor::getDecoderConfigDescription() const
     Descriptor* descriptor = nullptr;
     auto result = subDescriptors.Find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_CONFIG), descriptor);
     return SUCCEEDED(result) ? DYNAMIC_CAST(DecoderConfigDescriptor, descriptor) : nullptr;
+}
+
 }

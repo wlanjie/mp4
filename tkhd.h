@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 const int TKHD_FLAG_TRACK_ENABLED    = 1;
 const int TKHD_FLAG_TRACK_IN_MOVIE   = 2;
 const int TKHD_FLAG_TRACK_IN_PREVIEW = 4;
@@ -80,5 +82,5 @@ private:
     SI32 matrix[9];
 };
 
-
+}
 #endif //MP4_TKHDATOM_H

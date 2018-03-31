@@ -10,6 +10,8 @@
 #include "databuffer.h"
 #include "nal_parser.h"
 
+namespace mp4 {
+
 const unsigned int AVC_NAL_UNIT_TYPE_CODED_SLICE_OF_NON_IDR_PICTURE    = 1;
 const unsigned int AVC_NAL_UNIT_TYPE_CODED_SLICE_DATA_PARTITION_A      = 2;
 const unsigned int AVC_NAL_UNIT_TYPE_CODED_SLICE_DATA_PARTITION_B      = 3;
@@ -262,4 +264,5 @@ private:
     unsigned int prevPicOrderCntLsb;
 };
 
+}
 #endif //MP4_AVCPARSER_H

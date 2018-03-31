@@ -5,13 +5,14 @@
 #ifndef MP4_MP4_H
 #define MP4_MP4_H
 
-
 #include "types.h"
 #include "atom.h"
 #include "moov.h"
 #include "ftyp.h"
 #include "mvhd.h"
 #include "track.h"
+
+namespace mp4 {
 
 class Mp4 {
 public:
@@ -35,5 +36,5 @@ private:
     List<Track> tracks;
 };
 
-
+}
 #endif //MP4_MP4_H

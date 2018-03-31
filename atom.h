@@ -10,6 +10,8 @@
 #include "bytestream.h"
 #include "list.h"
 
+namespace mp4 {
+
 const UI32 ATOM_HEADER_SIZE = 8;
 const UI32 ATOM_HEADER_SIZE_64 = 16;
 const UI32 FULL_ATOM_HEADER_SIZE = 12;
@@ -244,4 +246,5 @@ const Atom::Type ATOM_TYPE_DTSE = ATOM_TYPE('d', 't', 's', 'e');
 const Atom::Type ATOM_TYPE_MFRA = ATOM_TYPE('m', 'f', 'r', 'a');
 const Atom::Type ATOM_TYPE_MARL = ATOM_TYPE('m', 'a', 'r', 'l');
 
+}
 #endif //MP4_ATOM_H

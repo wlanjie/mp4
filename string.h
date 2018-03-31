@@ -7,6 +7,8 @@
 
 #include "types.h"
 
+namespace mp4 {
+// TODO name
 class String {
 public:
     // constructors
@@ -46,5 +48,5 @@ private:
     Size m_Length;
 };
 
-
+}
 #endif //MP4_STRING_H

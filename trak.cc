@@ -9,6 +9,8 @@
 #include "dref.h"
 #include "url.h"
 
+namespace mp4 {
+
 Trak::Trak(SampleTable* sampleTable,
            Atom::Type hdlrType,
            const char *hdlrName,
@@ -220,4 +222,6 @@ Result Trak::setHeight(UI32 height) {
         return SUCCESS;
     }
     return ERROR_INVALID_STATE;
+}
+
 }

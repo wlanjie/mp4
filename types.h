@@ -5,6 +5,8 @@
 #ifndef MP4_TYPES_H
 #define MP4_TYPES_H
 
+namespace mp4 {
+
 typedef int            Result;
 typedef unsigned int   Flags;
 typedef unsigned int   Mask;
@@ -26,4 +28,5 @@ typedef long long SI64;
 #define NULL 0
 #endif
 
+}
 #endif //MP4_TYPES_H

@@ -5,9 +5,10 @@
 #ifndef MP4_SAMPLEENTRY_H
 #define MP4_SAMPLEENTRY_H
 
-
 #include "container.h"
 #include "sampledescription.h"
+
+namespace mp4 {
 
 class SampleEntry : public Container {
 public:
@@ -157,4 +158,5 @@ public:
     Mp4aSampleEntry(UI32 sampleRate, UI16 sampleSize, UI16 channelCount, EsDescriptor* descriptor);
 };
 
+}
 #endif //MP4_SAMPLEENTRY_H

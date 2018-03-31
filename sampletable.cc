@@ -12,6 +12,8 @@
 #include "stco.h"
 #include "co64.h"
 
+namespace mp4 {
+
 Result SampleTable::generateStbl(Container *&stbl) {
     stbl = new Container(ATOM_TYPE_STBL);
     auto* stsd = new Stsd(this);
@@ -118,4 +120,6 @@ Result SampleTable::generateStbl(Container *&stbl) {
         stbl->addChild(co64);
     }
     return SUCCESS;
+}
+
 }

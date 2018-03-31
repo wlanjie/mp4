@@ -4,6 +4,8 @@
 
 #include "adts_parser.h"
 
+namespace mp4 {
+
 #define ADTS_HEADER_SIZE 7
 
 #define ADTS_SYNC_MASK     0xFFF6 /* 12 sync bits plus 2 layer bits */
@@ -196,4 +198,6 @@ Result AdtsParser::findHeader(UI08 *header) {
         }
     }
     return ERROR_NOT_ENOUGH_DATA;
+}
+
 }

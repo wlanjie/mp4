@@ -7,6 +7,8 @@
 #include "interfaces.h"
 #include "debug.h"
 
+namespace mp4 {
+
 AvcSequenceParameterSet::AvcSequenceParameterSet() :
         profileIdc(0),
         constraintSet0Flag(0),
@@ -903,4 +905,6 @@ void AvcFrameParser::AccessUnitInfo::reset() {
     isIdr = false;
     decodeOrder = 0;
     displayOrder = 0;
+}
+
 }

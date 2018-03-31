@@ -13,8 +13,11 @@
 #include "avc_parser.h"
 #include "debug.h"
 #include "adts_parser.h"
+#include "sample_source.h"
 
 #define VIDEO_FRAME_RATE 24
+
+using namespace mp4;
 
 struct SampleOrder {
     SampleOrder(UI32 decodeOrder, UI32 displayOrder) : decodeOrder(decodeOrder), displayOrder(displayOrder) {}
@@ -81,7 +84,7 @@ Result FileStorage::create(const char *baseName, FileStorage *&fileStorage) {
 }
 
 void addH264Track(FileStorage *storage, Movie* movie) {
-    const char* inputName = "/Users/wlanjie/Desktop/test.h264";
+    const char* inputName = "/Users/wlanjie/Desktop/mp4.h264";
     ByteStream* input;
     auto result = FileByteStream::create(inputName, FileByteStream::STREAM_MODE_READ, input);
     if (FAILED(result)) {
@@ -525,14 +528,19 @@ static void writeSamples(Track* track, SampleDescription* sdesc, ByteStream* out
         return;
     }
 
+    printf("duration = %d\n", track->getDurationMs());
+    SampleSource *source = new TrackSampleSource(track);
+    source->seekToTime(8000, true);
     Sample sample;
     DataBuffer data;
     Ordinal index = 0;
-    while (SUCCEEDED(track->readSample(index, sample, data))) {
-        printf("pts = %lld, dts = %lld current = %lld duration = %d \n", sample.getCts(), sample.getDts(), ConvertTime(sample.getCts(), track->getMediaTimeScale(), 1000), sample.getDuration());
+    while (SUCCEEDED(source->readNextSample(sample, data, index))) {
+        auto time = ConvertTime(sample.getCts(), track->getMediaTimeScale(), 1000);
+        printf("pts = %lld, dts = %lld current = %lld duration = %d \n", sample.getCts(), sample.getDts(), time, sample.getDuration());
         writeSample(data, prefix, nalu_length_size, output);
         index++;
     }
+    delete source;
 }
 
 
@@ -568,7 +576,7 @@ int readVideo() {
     switch(sampleDescription->getType()) {
         case SampleDescription::TYPE_AVC:
             Ordinal index;
-            track->getSampleIndexForTimeStampMs(5000, index);
+            track->getSampleIndexForTimeStampMs(7000, index);
             printf("width = %d height = %d index = %d\n", track->getWidth()/65536, track->getHeight()/65536, index);
             writeSamples(track, sampleDescription, output);
             break;
@@ -743,8 +751,8 @@ int readAac() {
 }
 
 int main(int argc, char** argv) {
-    writeVideo();
     readVideo();
     readAac();
+    writeVideo();
     return 0;
 }

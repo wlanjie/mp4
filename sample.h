@@ -5,8 +5,9 @@
 #ifndef MP4_SAMPLE_H
 #define MP4_SAMPLE_H
 
-
 #include "bytestream.h"
+
+namespace mp4 {
 
 class Sample {
 public:
@@ -100,5 +101,5 @@ private:
     bool sync;
 };
 
-
+}
 #endif //MP4_SAMPLE_H

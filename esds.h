@@ -5,10 +5,11 @@
 #ifndef MP4_ESDS_H
 #define MP4_ESDS_H
 
-
 #include "atom.h"
 #include "descriptor.h"
 #include "es_descriptor.h"
+
+namespace mp4 {
 
 class Esds : public Atom {
 public:
@@ -23,5 +24,5 @@ private:
 
 };
 
-
+}
 #endif //MP4_ESDS_H

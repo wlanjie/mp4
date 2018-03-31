@@ -8,6 +8,8 @@
 #include "atom.h"
 #include "array.h"
 
+namespace mp4 {
+
 /**
  * Sample Size Boxes
  */
@@ -28,5 +30,5 @@ private:
     Array<UI32> entries;
 };
 
-
+}
 #endif //MP4_STSZ_H

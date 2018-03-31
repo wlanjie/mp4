@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 const UI32 HANDLER_TYPE_SOUN = ATOM_TYPE('s','o','u','n');
 const UI32 HANDLER_TYPE_VIDE = ATOM_TYPE('v','i','d','e');
 
@@ -28,5 +30,5 @@ private:
     String handlerName;
 };
 
-
+}
 #endif //MP4_HDLRATOM_H

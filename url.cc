@@ -4,6 +4,8 @@
 
 #include "url.h"
 
+namespace mp4 {
+
 Url *Url::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -52,4 +54,6 @@ Result Url::writeFields(ByteStream &stream) {
         }
         return SUCCESS;
     }
+}
+
 }

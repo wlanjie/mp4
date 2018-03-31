@@ -8,6 +8,8 @@
 #include "synthetic_sampletable.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Track::Track(Track::Type type,
              SampleTable* sampleTable,
              UI32 trackId,
@@ -298,4 +300,6 @@ Result Track::attach(Moov *moovAtom) {
     moovAtom->addChild(trakAtom);
     trakAtomIsOwned = false;
     return SUCCESS;
+}
+
 }

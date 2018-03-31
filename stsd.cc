@@ -4,6 +4,8 @@
 
 #include "stsd.h"
 
+namespace mp4 {
+
 Stsd *Stsd::create(Size size, ByteStream &stream, AtomFactory &factory) {
     UI08 version;
     UI32 flags;
@@ -105,4 +107,6 @@ void Stsd::onChildChanged(Atom *child) {
     if (parent) {
         parent->onChildChanged(child);
     }
+}
+
 }

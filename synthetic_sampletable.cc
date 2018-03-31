@@ -4,6 +4,8 @@
 
 #include "synthetic_sampletable.h"
 
+namespace mp4 {
+
 SyntheticSampleTable::SyntheticSampleTable(Cardinal chunkSize) :
         chunkSize(chunkSize ? chunkSize : SYNTHETIC_SAMPLE_TABLE_DEFAULT_CHUNK_SIZE) {
     LookupCache.sample = 0;
@@ -123,4 +125,6 @@ Result SyntheticSampleTable::addSample(ByteStream &stream, Position offset, Size
 
 Result SyntheticSampleTable::addSample(const Sample &sample) {
     return samples.Append(sample);
+}
+
 }

@@ -4,6 +4,8 @@
 
 #include "filewriter.h"
 
+namespace mp4 {
+// TODO remove?
 Result FileWriter::write(File &file, ByteStream &stream, FileWriter::Interleaving interleaving) {
     Ftyp* fileType = file.getFileType();
     if (fileType) {
@@ -11,4 +13,6 @@ Result FileWriter::write(File &file, ByteStream &stream, FileWriter::Interleavin
     }
 
     return SUCCESS;
+}
+
 }

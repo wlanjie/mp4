@@ -5,9 +5,10 @@
 #ifndef MP4_AVCC_H
 #define MP4_AVCC_H
 
-
 #include "atom.h"
 #include "array.h"
+
+namespace mp4 {
 
 const UI08 AVC_PROFILE_BASELINE = 66;
 const UI08 AVC_PROFILE_MAIN     = 77;
@@ -52,5 +53,5 @@ private:
     DataBuffer rawBytes;
 };
 
-
+}
 #endif //MP4_AVCC_H

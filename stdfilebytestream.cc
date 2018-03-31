@@ -15,6 +15,8 @@
 
 #include "filebytestream.h"
 
+namespace mp4 {
+// TODO name
 /*----------------------------------------------------------------------
 |   compatibility wrappers
 +---------------------------------------------------------------------*/
@@ -306,5 +308,7 @@ FileByteStream::FileByteStream(const char*              name,
     if (FAILED(result)) throw Exception(result);
 
     delegate = stream;
+}
+
 }
 #endif

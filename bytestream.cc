@@ -6,6 +6,8 @@
 #include "utils.h"
 #include "defined.h"
 
+namespace mp4 {
+
 const int BYTE_STREAM_COPY_BUFFER_SIZE = 65536;
 const int MEMORY_BYTE_STREAM_MAX_SIZE  = 0x4000000; // 64 megs
 
@@ -525,4 +527,6 @@ void MemoryByteStream::release() {
     if (--m_ReferenceCount == 0) {
         delete this;
     }
+}
+
 }

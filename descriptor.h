@@ -5,8 +5,9 @@
 #ifndef MP4_DESCIPTOR_H
 #define MP4_DESCIPTOR_H
 
-
 #include "expandable.h"
+
+namespace mp4 {
 
 const UI08 DESCRIPTOR_TAG_ES        = 0x03;
 const UI08 DESCRIPTOR_TAG_ES_ID_INC = 0x0E;
@@ -48,4 +49,5 @@ private:
     UI08 tag;
 };
 
+}
 #endif //MP4_DESCIPTOR_H

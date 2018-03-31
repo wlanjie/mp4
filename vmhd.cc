@@ -5,6 +5,8 @@
 #include "vmhd.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Vmhd *Vmhd::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -34,4 +36,6 @@ Result Vmhd::writeFields(ByteStream &stream) {
     result = stream.write(opColor, sizeof(opColor));
     if (FAILED(result)) return result;
     return SUCCESS;
+}
+
 }

@@ -5,6 +5,8 @@
 #include "esds.h"
 #include "descriptor_factory.h"
 
+namespace mp4 {
+
 Esds *Esds::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -47,4 +49,6 @@ Result Esds::writeFields(ByteStream &stream) {
         return descriptor->write(stream);
     }
     return SUCCESS;
+}
+
 }

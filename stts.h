@@ -8,6 +8,8 @@
 #include "atom.h"
 #include "array.h"
 
+namespace mp4 {
+
 class SttsTableEntry {
 public:
     SttsTableEntry() :
@@ -42,5 +44,5 @@ private:
     } LookupCache;
 };
 
-
+}
 #endif //MP4_STTS_H

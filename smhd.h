@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 /**
  * sound media header, overall information (sound track only)
  */
@@ -21,5 +23,5 @@ private:
     UI16 reserved;
 };
 
-
+}
 #endif //MP4_SMHD_H

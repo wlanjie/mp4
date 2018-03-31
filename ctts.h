@@ -8,6 +8,8 @@
 #include "atom.h"
 #include "array.h"
 
+namespace mp4 {
+
 class CttsTableEntry {
 public:
     CttsTableEntry() : sampleCount(0), sampleOffset(0) {}
@@ -37,5 +39,5 @@ private:
     } LookupCache;
 };
 
-
+}
 #endif //MP4_CTTS_H

@@ -5,6 +5,8 @@
 #include "mdhd.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Mdhd *Mdhd::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -95,4 +97,6 @@ Result Mdhd::writeFields(ByteStream &stream) {
 
 UI32 Mdhd::getDurationMs() const {
     return DurationMsFromUnits(duration, timeScale);
+}
+
 }

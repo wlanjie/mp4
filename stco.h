@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 /**
  * Chunk Offset Box
  * chunk offset, partial data-offset information
@@ -29,5 +31,5 @@ private:
     UI32 entryCount;
 };
 
-
+}
 #endif //MP4_STCO_H

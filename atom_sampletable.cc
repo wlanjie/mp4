@@ -4,6 +4,8 @@
 
 #include "atom_sampletable.h"
 
+namespace mp4 {
+
 AtomSampleTable::AtomSampleTable(Container *stbl, ByteStream &stream) : stream(stream) {
     stsc = DYNAMIC_CAST(Stsc, stbl->getChild(ATOM_TYPE_STSC));
     stco = DYNAMIC_CAST(Stco, stbl->getChild(ATOM_TYPE_STCO));
@@ -216,4 +218,6 @@ Result AtomSampleTable::setSampleSize(Ordinal sampleIndex, Size size) {
         return stz2->setSampleSize(sampleIndex + 1, size);
     }
     return FAILURE;
+}
+
 }

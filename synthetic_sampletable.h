@@ -8,6 +8,8 @@
 #include "sampletable.h"
 #include "sample.h"
 
+namespace mp4 {
+
 const Cardinal SYNTHETIC_SAMPLE_TABLE_DEFAULT_CHUNK_SIZE = 10;
 
 class SyntheticSampleTable : public SampleTable {
@@ -86,5 +88,5 @@ private:
     } LookupCache;
 };
 
-
+}
 #endif //MP4_SYNCTHETICSAMPLETABLE_H

@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 /**
  * video media header, overall information (video track only)
  */
@@ -21,5 +23,5 @@ private:
     UI16 opColor[3];
 };
 
-
+}
 #endif //MP4_VMHD_H

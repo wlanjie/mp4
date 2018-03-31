@@ -5,6 +5,8 @@
 #include "decoder_config_descriptor.h"
 #include "descriptor_factory.h"
 
+namespace mp4 {
+
 DecoderConfigDescriptor::DecoderConfigDescriptor(UI08 streamType,
                                                  UI08 oti,
                                                  UI32 bufferSize,
@@ -66,4 +68,6 @@ const DecoderSpecificInfoDescriptor *DecoderConfigDescriptor::getDecoderSpecific
     Descriptor* descriptor = nullptr;
     auto result = subDescriptors.Find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO), descriptor);
     return SUCCEEDED(result) ? DYNAMIC_CAST(DecoderSpecificInfoDescriptor, descriptor) : nullptr;
+}
+
 }

@@ -5,11 +5,12 @@
 #ifndef MP4_SAMPLE_SOURCE_H
 #define MP4_SAMPLE_SOURCE_H
 
-
 #include "types.h"
 #include "sample.h"
 #include "sampledescription.h"
 #include "track.h"
+
+namespace mp4 {
 
 class SampleSource {
 public:
@@ -66,5 +67,5 @@ private:
     Ordinal sampleIndex;
 };
 
-
+}
 #endif //MP4_SAMPLE_SOURCE_H

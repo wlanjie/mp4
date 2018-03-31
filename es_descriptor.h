@@ -8,6 +8,8 @@
 #include "descriptor.h"
 #include "decoder_config_descriptor.h"
 
+namespace mp4 {
+
 class EsDescriptor : public Descriptor {
 public:
     EsDescriptor(UI16 esId);
@@ -26,4 +28,5 @@ private:
     mutable List<Descriptor> subDescriptors;
 };
 
+}
 #endif //MP4_ESDESCRIPTOR_H

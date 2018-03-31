@@ -5,6 +5,8 @@
 #include "stss.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stss *Stss::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -85,4 +87,6 @@ bool Stss::isSampleSync(Ordinal sample) {
         entryIndex++;
     }
     return false;
+}
+
 }

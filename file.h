@@ -5,12 +5,13 @@
 #ifndef MP4_FILE_H
 #define MP4_FILE_H
 
-
 #include "atom.h"
 #include "atomfactory.h"
 #include "ftyp.h"
 #include "mp4.h"
 #include "movie.h"
+
+namespace mp4 {
 
 const UI32 FILE_BRAND_ISOM = ATOM_TYPE('i', 's', 'o', 'm');
 const UI32 FILE_BRAND_ISO5 = ATOM_TYPE('i', 's', 'o', '5');
@@ -50,5 +51,5 @@ private:
     bool moovIsBeforeMdat;
 };
 
-
+}
 #endif //MP4_FILE_H

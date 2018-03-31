@@ -9,6 +9,8 @@
 #include "sampletable.h"
 #include "stz2.h"
 
+namespace mp4 {
+
 class AtomSampleTable : public SampleTable {
 public:
     AtomSampleTable(Container* stbl, ByteStream& stream);
@@ -37,5 +39,6 @@ private:
     Co64* co64;
 };
 
+}
 
 #endif //MP4_ATOMSAMPLETABLE_H

@@ -8,6 +8,8 @@
 #include "types.h"
 #include "results.h"
 
+namespace mp4 {
+// TODO name
 template <typename T>
 class List
 {
@@ -84,18 +86,12 @@ private:
     List<T>& operator=(const List<T>&);
 };
 
-/*----------------------------------------------------------------------
-|   List<T>::~List<T>
-+---------------------------------------------------------------------*/
 template <typename T>
 List<T>::~List()
 {
     Clear();
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Clear
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -114,9 +110,6 @@ List<T>::Clear()
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Add
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -125,9 +118,6 @@ List<T>::Add(T* data)
     return Add(new Item(data));
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Add
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::Add(Item* item)
@@ -151,9 +141,6 @@ List<T>::Add(Item* item)
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Remove
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::Remove(Item* item)
@@ -190,9 +177,6 @@ List<T>::Remove(Item* item)
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Remove
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::Remove(T* data)
@@ -210,9 +194,6 @@ List<T>::Remove(T* data)
     return ERROR_NO_SUCH_ITEM;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Insert
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::Insert(Item* where, T* data)
@@ -254,9 +235,6 @@ List<T>::Insert(Item* where, T* data)
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Get
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::Get(Ordinal idx, T*& data) const
@@ -273,9 +251,6 @@ List<T>::Get(Ordinal idx, T*& data) const
     }
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::PopHead
-+---------------------------------------------------------------------*/
 template <typename T>
 Result
 List<T>::PopHead(T*& data)
@@ -304,9 +279,6 @@ List<T>::PopHead(T*& data)
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Apply
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -322,9 +294,6 @@ List<T>::Apply(const typename Item::Operator& op) const
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::ApplyUntilFailure
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -342,9 +311,6 @@ List<T>::ApplyUntilFailure(const typename Item::Operator& op) const
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::ApplyUntilSuccess
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -362,9 +328,6 @@ List<T>::ApplyUntilSuccess(const typename Item::Operator& op) const
     return FAILURE;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::ReverseApply
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -382,9 +345,6 @@ List<T>::ReverseApply(const typename Item::Operator& op) const
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::Find
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -404,9 +364,6 @@ List<T>::Find(const typename Item::Finder& finder, T*& data) const
     return ERROR_NO_SUCH_ITEM;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::ReverseFind
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -426,9 +383,6 @@ List<T>::ReverseFind(const typename Item::Finder& finder, T*& data) const
     return ERROR_NO_SUCH_ITEM;
 }
 
-/*----------------------------------------------------------------------
-|   List<T>::DeleteReferences
-+---------------------------------------------------------------------*/
 template <typename T>
 inline
 Result
@@ -450,5 +404,5 @@ List<T>::DeleteReferences()
     return SUCCESS;
 }
 
-
+}
 #endif //MP4_LIST_H

@@ -5,9 +5,10 @@
 #ifndef MP4_STSC_H
 #define MP4_STSC_H
 
-
 #include "atom.h"
 #include "array.h"
+
+namespace mp4 {
 
 class StscTableEntry {
 public:
@@ -63,5 +64,5 @@ private:
     Ordinal cachedChunkGroup;
 };
 
-
+}
 #endif //MP4_STSC_H

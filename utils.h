@@ -13,6 +13,9 @@
 #include "config.h"
 #include "databuffer.h"
 
+namespace mp4 {
+  // TODO mp4
+
 /*----------------------------------------------------------------------
 |   global options
 +---------------------------------------------------------------------*/
@@ -248,5 +251,5 @@ private:
     unsigned int   m_BitsCached;
 };
 
-
+}
 #endif //MP4_UTILS_H

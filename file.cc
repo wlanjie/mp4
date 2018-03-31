@@ -5,6 +5,8 @@
 #include "file.h"
 #include "mp4.h"
 
+namespace mp4 {
+
 File::File(Movie* movie) :
         movie(movie),
         ftyp(nullptr),
@@ -153,4 +155,6 @@ void File::release(Array<Array<UI64> *> trakChunkOffsetsBackup) {
     for (unsigned int i = 0; i < trakChunkOffsetsBackup.ItemCount(); i++) {
         delete trakChunkOffsetsBackup[i];
     }
+}
+
 }

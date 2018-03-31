@@ -9,6 +9,8 @@
 #include "atom.h"
 #include "array.h"
 
+namespace mp4 {
+
 class AtomFactory {
 public:
     // types
@@ -75,11 +77,12 @@ public:
     // constructor
     DefaultAtomFactory();
 
-    // this member is used to detect the situation where the 
+    // this member is used to detect the situation where the
     // platform's code loader does not construct static C++ objects
     bool initialized;
 
     Result initialize();
 };
 
+}
 #endif //MP4_ATOMFACTORY_H

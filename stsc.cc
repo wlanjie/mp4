@@ -5,6 +5,8 @@
 #include "stsc.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stsc *Stsc::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -132,4 +134,6 @@ Result Stsc::addEntry(Cardinal chunkCount, Cardinal samplePerChunk, Ordinal samp
     entries.Append(StscTableEntry(firstChunk, firstSample, chunkCount, samplePerChunk, sampleDescriptionIndex));
     size32 += 12;
     return SUCCESS;
+}
+
 }

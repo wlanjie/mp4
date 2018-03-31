@@ -10,6 +10,8 @@
 #include "mdhd.h"
 #include "sampletable.h"
 
+namespace mp4 {
+
 /**
  * moov中通常包含两个trak，一个视频索引，一个音频索引
  * “trak”也是一个container box，
@@ -66,5 +68,5 @@ private:
     Mdhd* mdhdAtom;
 };
 
-
+}
 #endif //MP4_TRAKATOM_H

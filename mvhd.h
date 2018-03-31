@@ -5,9 +5,10 @@
 #ifndef MP4_MVHDATOM_H
 #define MP4_MVHDATOM_H
 
-
 #include "defined.h"
 #include "atom.h"
+
+namespace mp4 {
 
 /**
  * mvhd box (movie header)
@@ -54,5 +55,5 @@ private:
     UI32 nextTrackId;
 };
 
-
+}
 #endif //MP4_MVHDATOM_H

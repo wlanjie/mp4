@@ -8,9 +8,11 @@
 #include "types.h"
 #include "results.h"
 
+namespace mp4 {
+
 const int ERROR_BASE_BITSTREAM = -10000;
 
-// the max frame size we can handle 
+// the max frame size we can handle
 const unsigned int BITSTREAM_BUFFER_SIZE = 8192;
 
 // flags
@@ -244,4 +246,5 @@ BitStream::PeekByte() {
     return (UI08) (PeekBits(extra_bits + 8) & 0xFF);
 }
 
+}
 #endif // _BIT_STREAM_H_

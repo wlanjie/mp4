@@ -4,6 +4,8 @@
 
 #include "decoder_specificinfo_descriptor.h"
 
+namespace mp4 {
+
 DecoderSpecificInfoDescriptor::DecoderSpecificInfoDescriptor(const DataBuffer &data) :
         Descriptor(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO, minHeaderSize(data.getDataSize()), data.getDataSize()),
         info(data) {
@@ -25,4 +27,6 @@ Result DecoderSpecificInfoDescriptor::writeFields(ByteStream &stream) {
         stream.write(info.getData(), info.getDataSize());
     }
     return SUCCESS;
+}
+
 }

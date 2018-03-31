@@ -9,6 +9,8 @@
 #include "sl_config_descriptor.h"
 #include "mp4_audio_info.h"
 
+namespace mp4 {
+
 SampleDescription::SampleDescription(SampleDescription::Type type,
                                      UI32 format,
                                      AtomParent *details) :
@@ -385,4 +387,6 @@ MpegAudioSampleDescription::Mpeg4AudioObjectType MpegAudioSampleDescription::get
 
 Atom *MpegAudioSampleDescription::toAtom() const {
     return new Mp4aSampleEntry(sampleRate << 16, sampleSize, channelCount, createEsDescriptor());
+}
+
 }

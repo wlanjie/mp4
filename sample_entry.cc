@@ -6,6 +6,8 @@
 #include "sample_entry.h"
 #include "avc_sample_description.h"
 
+namespace mp4 {
+
 SampleEntry::SampleEntry(Atom::Type format, const AtomParent *details) :
         Container(format),
         dataReferenceIndex(1) {
@@ -486,5 +488,7 @@ Mp4aSampleEntry::Mp4aSampleEntry(Size size, ByteStream &stream, AtomFactory &fac
 
 Mp4aSampleEntry::Mp4aSampleEntry(UI32 sampleRate, UI16 sampleSize, UI16 channelCount, EsDescriptor *descriptor) :
         MpegAudioSampleEntry(ATOM_TYPE_MP4A, sampleRate, sampleSize, channelCount, descriptor) {
+
+}
 
 }

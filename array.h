@@ -9,6 +9,8 @@
 #include "types.h"
 #include "results.h"
 
+namespace mp4 {
+
 const int ARRAY_INITIAL_COUNT = 64;
 
 template <typename T>
@@ -219,4 +221,5 @@ Array<T>::Append(const T& item)
     return SUCCESS;
 }
 
+}
 #endif //MP4_ARRAY_H

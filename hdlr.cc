@@ -5,6 +5,8 @@
 #include "hdlr.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Hdlr *Hdlr::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -79,4 +81,6 @@ Result Hdlr::writeFields(ByteStream &stream) {
     Size padding = size32 - (FULL_ATOM_HEADER_SIZE + 20 + name_size);
     while (padding--) stream.writeUI08(0);
     return SUCCESS;
+}
+
 }

@@ -5,10 +5,8 @@
 #ifndef MP4_RESULTS_H
 #define MP4_RESULTS_H
 
+namespace mp4 {
 
-/*----------------------------------------------------------------------
-|   constants
-+---------------------------------------------------------------------*/
 const int SUCCESS                               =  0;
 const int FAILURE                               = -1;
 const int ERROR_OUT_OF_MEMORY                   = -2;
@@ -34,11 +32,8 @@ const int ERROR_BUFFER_TOO_SMALL                = -21;
 const int ERROR_NOT_ENOUGH_DATA                 = -22;
 const int ERROR_NOT_ENOUGH_SPACE                = -23;
 
-/*----------------------------------------------------------------------
-|   utility functions
-+---------------------------------------------------------------------*/
 const char* ResultText(int result);
-
+// TODO define
 #define FAILED(result) ((result) != SUCCESS)
 #define SUCCEEDED(result) ((result) == SUCCESS)
 
@@ -47,4 +42,5 @@ const char* ResultText(int result);
     if (FAILED(_result)) return _result;    \
 } while(0)
 
+}
 #endif //MP4_RESULTS_H

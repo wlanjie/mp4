@@ -5,6 +5,8 @@
 #include "string.h"
 #include "utils.h"
 
+namespace mp4 {
+// TODO name
 /*----------------------------------------------------------------------
 |   String::EmptyString
 +---------------------------------------------------------------------*/
@@ -150,4 +152,6 @@ String::Find(char c, unsigned int start) const
         if (chars[i] == c) return i;
     }
     return -1;
+}
+
 }

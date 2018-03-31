@@ -5,9 +5,10 @@
 #ifndef MP4_FILEWRITER_H
 #define MP4_FILEWRITER_H
 
-
 #include "types.h"
 #include "file.h"
+
+namespace mp4 {
 
 class FileWriter {
 public:
@@ -20,5 +21,5 @@ private:
     FileWriter() {}
 };
 
-
+}
 #endif //MP4_FILEWRITER_H

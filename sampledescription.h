@@ -5,10 +5,11 @@
 #ifndef MP4_SAMPLEDESCRIPTION_H
 #define MP4_SAMPLEDESCRIPTION_H
 
-
 #include "types.h"
 #include "atom.h"
 #include "esds.h"
+
+namespace mp4 {
 
 const UI32 SAMPLE_FORMAT_AVC1 = ATOM_TYPE('a','v','c','1');
 const UI32 SAMPLE_FORMAT_AVC2 = ATOM_TYPE('a','v','c','2');
@@ -241,5 +242,5 @@ const UI08 MPEG4_AUDIO_OBJECT_TYPE_ER_AAC_ELD            = 39; /**< Error Resili
 const UI08 MPEG4_AUDIO_OBJECT_TYPE_SMR_SIMPLE            = 40; /**< SMR Simple                                   */
 const UI08 MPEG4_AUDIO_OBJECT_TYPE_SMR_MAIN              = 41; /**< SMR Main                                     */
 
-
+}
 #endif //MP4_SAMPLEDESCRIPTION_H

@@ -15,6 +15,8 @@
 #include "url.h"
 #include "smhd.h"
 
+namespace mp4 {
+
 AtomFactory::~AtomFactory() {
     m_TypeHandlers.DeleteReferences();
 }
@@ -378,4 +380,6 @@ DefaultAtomFactory::DefaultAtomFactory() {
 Result DefaultAtomFactory::initialize() {
     // register built-in type handlers
     return SUCCESS;
+}
+
 }

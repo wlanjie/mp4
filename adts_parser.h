@@ -8,6 +8,8 @@
 #include "types.h"
 #include "bit_stream.h"
 
+namespace mp4 {
+
 class AdtsHeader {
 public:
     AdtsHeader(const UI08* bytes);
@@ -69,5 +71,6 @@ private:
     Cardinal frameCount;
 };
 
+}
 
 #endif //MP4_ADTSPARSER_H

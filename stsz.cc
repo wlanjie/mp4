@@ -5,6 +5,8 @@
 #include "stsz.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stsz *Stsz::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -113,4 +115,6 @@ Result Stsz::addEntry(UI32 size) {
     sampleCount++;
     size32 += 4;
     return SUCCESS;
+}
+
 }

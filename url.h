@@ -7,6 +7,8 @@
 
 #include "atom.h"
 
+namespace mp4 {
+
 class Url : public Atom {
 public:
     // class methods
@@ -27,5 +29,5 @@ private:
     String m_Url;
 };
 
-
+}
 #endif //MP4_URLATOM_H

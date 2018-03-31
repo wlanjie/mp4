@@ -5,8 +5,9 @@
 #ifndef MP4_DECODERSPECIFICINFODESCRIPTOR_H
 #define MP4_DECODERSPECIFICINFODESCRIPTOR_H
 
-
 #include "descriptor.h"
+
+namespace mp4 {
 
 const UI08 DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO = 0x05;
 
@@ -23,5 +24,5 @@ private:
     DataBuffer info;
 };
 
-
+}
 #endif //MP4_DECODERSPECIFICINFODESCRIPTOR_H

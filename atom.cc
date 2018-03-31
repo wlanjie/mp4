@@ -7,6 +7,8 @@
 #include "container.h"
 #include "debug.h"
 
+namespace mp4 {
+
 static const unsigned int ATOM_MAX_CLONE_SIZE = 1048576; // 1 meg
 static const unsigned int UNKNOWN_ATOM_MAX_LOCAL_PAYLOAD_SIZE = 4096;
 
@@ -418,4 +420,6 @@ Result AtomListWriter::action(Atom *atom) const {
     }
 
     return SUCCESS;
+}
+
 }

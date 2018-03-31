@@ -5,8 +5,9 @@
 #ifndef MP4_FILEBYTESTREAM_H
 #define MP4_FILEBYTESTREAM_H
 
-
 #include "bytestream.h"
+
+namespace mp4 {
 
 class FileByteStream : public ByteStream {
 public:
@@ -38,5 +39,5 @@ protected:
     ByteStream* delegate;
 };
 
-
+}
 #endif //MP4_FILEBYTESTREAM_H

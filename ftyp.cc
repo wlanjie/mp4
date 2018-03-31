@@ -5,6 +5,8 @@
 #include "ftyp.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Ftyp::Ftyp(UI32 size, ByteStream &stream) :
         Atom(ATOM_TYPE_FTYP, size),
         majorBrand(0),
@@ -53,4 +55,6 @@ bool Ftyp::hasCompatibleBrand(UI32 brand) {
         }
     }
     return false;
+}
+
 }

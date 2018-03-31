@@ -5,6 +5,8 @@
 #include "container.h"
 #include "atomfactory.h"
 
+namespace mp4 {
+
 Container *Container::Create(Type type,
                              UI64 size,
                              bool isFull,
@@ -156,4 +158,6 @@ void Container::onChildRemoved(Atom *child) {
 
     // update our parent
     if (parent) parent->onChildChanged(this);
+}
+
 }

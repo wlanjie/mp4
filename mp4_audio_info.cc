@@ -5,6 +5,8 @@
 #include "mp4_audio_info.h"
 #include "sampledescription.h"
 
+namespace mp4 {
+// TODO name
 const unsigned int AAC_MAX_SAMPLING_FREQUENCY_INDEX = 12;
 static const unsigned int AacSamplingFreqTable[13] =
 {
@@ -251,4 +253,6 @@ Result Mp4AudioDecoderConfig::parseExtension(Mp4AudioDsiParser &parser) {
         }
     }
     return SUCCESS;
+}
+
 }

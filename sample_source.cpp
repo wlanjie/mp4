@@ -4,6 +4,8 @@
 
 #include "sample_source.h"
 
+namespace mp4 {
+
 TrackSampleSource::TrackSampleSource(Track *track) :
         track(track),
         sampleIndex(0) {
@@ -48,4 +50,6 @@ Result TrackSampleSource::seekToTime(UI32 timeMs, bool before) {
 
 SampleDescription *TrackSampleSource::getSampleDescription(Ordinal index) {
     return track->getSampleDescription(index);
+}
+
 }

@@ -4,6 +4,8 @@
 
 #include "tkhd.h"
 
+namespace mp4 {
+
 Tkhd *Tkhd::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -144,4 +146,6 @@ Result Tkhd::writeFields(ByteStream &stream) {
     result = stream.writeUI32(height);
     if (FAILED(result)) return result;
     return 0;
+}
+
 }

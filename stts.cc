@@ -5,6 +5,8 @@
 #include "stts.h"
 #include "utils.h"
 
+namespace mp4 {
+
 Stts *Stts::create(Size size, ByteStream &stream) {
     UI08 version;
     UI32 flags;
@@ -117,4 +119,6 @@ Result Stts::getSampleIndexForTimeStamp(UI64 ts, Ordinal &sampleIndex) {
         sampleIndex += entries[i].sampleCount;
     }
     return FAILURE;
+}
+
 }
