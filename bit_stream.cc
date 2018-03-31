@@ -2,6 +2,7 @@
 #include "utils.h"
 
 namespace mp4 {
+
 // TODO name
 BitStream::BitStream() {
     m_Buffer = new UI08[BITSTREAM_BUFFER_SIZE];
