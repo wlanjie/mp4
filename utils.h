@@ -16,9 +16,6 @@
 namespace mp4 {
   // TODO mp4
 
-/*----------------------------------------------------------------------
-|   global options
-+---------------------------------------------------------------------*/
 class GlobalOptions
 {
 public:
@@ -36,119 +33,60 @@ private:
     static List<Entry>* g_Entries;
 };
 
-/*----------------------------------------------------------------------
-|   non-inline functions
-+---------------------------------------------------------------------*/
 double   BytesToDoubleBE(const unsigned char* bytes);
 UI64 BytesToUInt64BE(const unsigned char* bytes);
 void BytesFromDoubleBE(unsigned char* bytes, double value);
 void BytesFromUInt64BE(unsigned char* bytes, UI64 value);
 
-/*----------------------------------------------------------------------
-|   BytesToUInt32BE
-+---------------------------------------------------------------------*/
-inline UI32
-BytesToUInt32BE(const unsigned char* bytes)
-{
-    return
-            ( ((UI32)bytes[0])<<24 ) |
-            ( ((UI32)bytes[1])<<16 ) |
-            ( ((UI32)bytes[2])<<8  ) |
-            ( ((UI32)bytes[3])     );
+inline UI32 BytesToUInt32BE(const unsigned char* bytes) {
+    return ( ((UI32)bytes[0])<<24 ) |
+           ( ((UI32)bytes[1])<<16 ) |
+           ( ((UI32)bytes[2])<<8  ) |
+           ( ((UI32)bytes[3])     );
 }
 
-/*----------------------------------------------------------------------
-|   BytesToInt32BE
-+---------------------------------------------------------------------*/
-inline SI32
-BytesToInt32BE(const unsigned char* bytes)
-{
+inline SI32 BytesToInt32BE(const unsigned char* bytes) {
     return BytesToUInt32BE(bytes);
 }
 
-/*----------------------------------------------------------------------
-|   BytesToUInt24BE
-+---------------------------------------------------------------------*/
-inline UI32
-BytesToUInt24BE(const unsigned char* bytes)
-{
-    return
-            ( ((UI32)bytes[0])<<16 ) |
-            ( ((UI32)bytes[1])<<8  ) |
-            ( ((UI32)bytes[2])     );
+inline UI32 BytesToUInt24BE(const unsigned char* bytes) {
+    return ( ((UI32)bytes[0])<<16 ) |
+           ( ((UI32)bytes[1])<<8  ) |
+           ( ((UI32)bytes[2])     );
 }
 
-/*----------------------------------------------------------------------
-|   BytesToInt16BE
-+---------------------------------------------------------------------*/
-inline UI16
-BytesToUInt16BE(const unsigned char* bytes)
-{
-    return
-            ( ((UI16)bytes[0])<<8  ) |
-            ( ((UI16)bytes[1])     );
+inline UI16 BytesToUInt16BE(const unsigned char* bytes) {
+    return ( ((UI16)bytes[0])<<8  ) |
+           ( ((UI16)bytes[1])     );
 }
 
-/*----------------------------------------------------------------------
-|   BytesToInt16BE
-+---------------------------------------------------------------------*/
-inline SI16
-BytesToInt16BE(const unsigned char* bytes)
-{
+inline SI16 BytesToInt16BE(const unsigned char* bytes) {
     return (SI16)BytesToUInt16BE(bytes);
 }
 
-/*----------------------------------------------------------------------
-|   BytesFromUInt32BE
-+---------------------------------------------------------------------*/
-inline void
-BytesFromUInt32BE(unsigned char* bytes, UI32 value)
-{
+inline void BytesFromUInt32BE(unsigned char* bytes, UI32 value) {
     bytes[0] = (unsigned char)((value >> 24)&0xFF);
     bytes[1] = (unsigned char)((value >> 16)&0xFF);
     bytes[2] = (unsigned char)((value >>  8)&0xFF);
     bytes[3] = (unsigned char)((value      )&0xFF);
 }
 
-/*----------------------------------------------------------------------
-|   BytesFromUInt24BE
-+---------------------------------------------------------------------*/
-inline void
-BytesFromUInt24BE(unsigned char* bytes, UI32 value)
-{
+inline void BytesFromUInt24BE(unsigned char* bytes, UI32 value) {
     bytes[0] = (unsigned char)((value >> 16)&0xFF);
     bytes[1] = (unsigned char)((value >>  8)&0xFF);
     bytes[2] = (unsigned char)((value      )&0xFF);
 }
 
-/*----------------------------------------------------------------------
-|   BytesFromUInt16BE
-+---------------------------------------------------------------------*/
-inline void
-BytesFromUInt16BE(unsigned char* bytes, UI16 value)
-{
+inline void BytesFromUInt16BE(unsigned char* bytes, UI16 value) {
     bytes[0] = (unsigned char)((value >> 8)&0xFF);
     bytes[1] = (unsigned char)((value     )&0xFF);
 }
 
-/*----------------------------------------------------------------------
-|   time functions
-+---------------------------------------------------------------------*/
-UI32 DurationMsFromUnits(UI64 units,
-                                 UI32 units_per_second);
-UI64 ConvertTime(UI64 time_value,
-                         UI32 from_time_scale,
-                         UI32 to_time_scale);
+UI32 DurationMsFromUnits(UI64 units, UI32 units_per_second);
+UI64 ConvertTime(UI64 time_value, UI32 from_time_scale, UI32 to_time_scale);
 
-/*----------------------------------------------------------------------
-|   random numbers
-+---------------------------------------------------------------------*/
-Result
-System_GenerateRandomBytes(UI08* buffer, Size buffer_size);
+Result System_GenerateRandomBytes(UI08* buffer, Size buffer_size);
 
-/*----------------------------------------------------------------------
-|   string utils
-+---------------------------------------------------------------------*/
 #if defined (CONFIG_HAVE_STDIO_H)
 #include <stdio.h>
 #endif
@@ -177,22 +115,13 @@ unsigned char HexNibble(char c);
 char NibbleHex(unsigned int nibble);
 void FormatFourChars(char* str, UI32 value);
 void FormatFourCharsPrintable(char* str, UI32 value);
-Result
-ParseHex(const char* hex, unsigned char* bytes, unsigned int count);
-Result
-FormatHex(const UI08* data, unsigned int data_size, char* hex);
-Result
-SplitArgs(char* arg, char*& arg0, char*& arg1, char*& arg2);
-Result
-SplitArgs(char* arg, char*& arg0, char*& arg1);
-UI32
-ParseIntegerU(const char* value);
+Result ParseHex(const char* hex, unsigned char* bytes, unsigned int count);
+Result FormatHex(const UI08* data, unsigned int data_size, char* hex);
+Result SplitArgs(char* arg, char*& arg0, char*& arg1, char*& arg2);
+Result SplitArgs(char* arg, char*& arg0, char*& arg1);
+UI32 ParseIntegerU(const char* value);
 
-/*----------------------------------------------------------------------
-|   BitWriter
-+---------------------------------------------------------------------*/
-class BitWriter
-{
+class BitWriter {
 public:
     BitWriter(Size size) : m_DataSize(size), m_BitCount(0) {
         if (size) {
@@ -215,11 +144,7 @@ private:
     unsigned int   m_BitCount;
 };
 
-/*----------------------------------------------------------------------
-|   BitReader
-+---------------------------------------------------------------------*/
-class BitReader
-{
+class BitReader {
 public:
     // types
     typedef unsigned int BitsWord;

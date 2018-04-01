@@ -6,9 +6,7 @@
 
 namespace mp4 {
 // TODO name
-const char*
-ResultText(int result)
-{
+const char* ResultText(int result) {
     switch (result) {
         case SUCCESS:                               return "SUCCESS";
         case FAILURE:                               return "FAILURE";

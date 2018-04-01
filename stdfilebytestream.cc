@@ -17,9 +17,6 @@
 
 namespace mp4 {
 // TODO name
-/*----------------------------------------------------------------------
-|   compatibility wrappers
-+---------------------------------------------------------------------*/
 #if !defined(ENOENT)
 #define ENOENT 2
 #endif
@@ -42,11 +39,7 @@ static int fopen_s(FILE**      file,
 }
 #endif // defined(CONFIG_HAVE_FOPEN_S
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream
-+---------------------------------------------------------------------*/
-class StdcFileByteStream: public ByteStream
-{
+class StdcFileByteStream: public ByteStream {
 public:
     // class methods
     static Result Create(FileByteStream*      delegator,
@@ -85,15 +78,10 @@ private:
     LargeSize   m_Size;
 };
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::Create
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::Create(FileByteStream*      delegator,
-                               const char*              name,
+Result StdcFileByteStream::Create(FileByteStream* delegator,
+                               const char* name,
                                FileByteStream::Mode mode,
-                               ByteStream*&         stream)
-{
+                               ByteStream*& stream) {
     // default value
     stream = NULL;
 
@@ -150,45 +138,27 @@ StdcFileByteStream::Create(FileByteStream*      delegator,
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::StdcFileByteStream
-+---------------------------------------------------------------------*/
 StdcFileByteStream::StdcFileByteStream(FileByteStream* delegator,
-                                               FILE*               file,
-                                               LargeSize       size) :
+                                       FILE* file,
+                                       LargeSize size) :
         m_Delegator(delegator),
         m_ReferenceCount(1),
         m_File(file),
         m_Position(0),
-        m_Size(size)
-{
+        m_Size(size) {
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::~StdcFileByteStream
-+---------------------------------------------------------------------*/
-StdcFileByteStream::~StdcFileByteStream()
-{
+StdcFileByteStream::~StdcFileByteStream() {
     if (m_File && m_File != stdin && m_File != stdout && m_File != stderr) {
         fclose(m_File);
     }
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::AddReference
-+---------------------------------------------------------------------*/
-void
-StdcFileByteStream::addReference()
-{
+void StdcFileByteStream::addReference() {
     m_ReferenceCount++;
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::Release
-+---------------------------------------------------------------------*/
-void
-StdcFileByteStream::release()
-{
+void StdcFileByteStream::release() {
     if (--m_ReferenceCount == 0) {
         if (m_Delegator) {
             delete m_Delegator;
@@ -198,14 +168,9 @@ StdcFileByteStream::release()
     }
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::ReadPartial
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::readPartial(void*     buffer,
+Result StdcFileByteStream::readPartial(void* buffer,
                                     Size  bytesToRead,
-                                    Size& bytesRead)
-{
+                                    Size& bytesRead) {
     size_t nbRead;
 
     nbRead = fread(buffer, 1, bytesToRead, m_File);
@@ -223,14 +188,9 @@ StdcFileByteStream::readPartial(void*     buffer,
     }
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::WritePartial
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::writePartial(const void* buffer,
-                                     Size    bytesToWrite,
-                                     Size&   bytesWritten)
-{
+Result StdcFileByteStream::writePartial(const void* buffer,
+                                     Size bytesToWrite,
+                                     Size& bytesWritten) {
     size_t nbWritten;
 
     if (bytesToWrite == 0) return SUCCESS;
@@ -246,12 +206,7 @@ StdcFileByteStream::writePartial(const void* buffer,
     }
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::Seek
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::seek(Position position)
-{
+Result StdcFileByteStream::seek(Position position) {
     // shortcut
     if (position == m_Position) return SUCCESS;
 
@@ -265,45 +220,26 @@ StdcFileByteStream::seek(Position position)
     }
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::Tell
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::tell(Position& position)
-{
+Result StdcFileByteStream::tell(Position& position) {
     position = m_Position;
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   StdcFileByteStream::GetSize
-+---------------------------------------------------------------------*/
-Result
-StdcFileByteStream::getSize(LargeSize& size)
-{
+Result StdcFileByteStream::getSize(LargeSize& size) {
     size = m_Size;
     return SUCCESS;
 }
 
-/*----------------------------------------------------------------------
-|   FileByteStream::Create
-+---------------------------------------------------------------------*/
-Result
-FileByteStream::create(const char*              name,
+Result FileByteStream::create(const char* name,
                            FileByteStream::Mode mode,
-                           ByteStream*&         stream)
-{
-    return StdcFileByteStream::Create(NULL, name, mode, stream);
+                           ByteStream*& stream) {
+    return StdcFileByteStream::Create(nullptr, name, mode, stream);
 }
 
 #if !defined(CONFIG_NO_EXCEPTIONS)
-/*----------------------------------------------------------------------
-|   FileByteStream::FileByteStream
-+---------------------------------------------------------------------*/
-FileByteStream::FileByteStream(const char*              name,
-                                       FileByteStream::Mode mode)
-{
-    ByteStream* stream = NULL;
+FileByteStream::FileByteStream(const char* name,
+                               FileByteStream::Mode mode) {
+    ByteStream* stream = nullptr;
     Result result = StdcFileByteStream::Create(this, name, mode, stream);
     if (FAILED(result)) throw Exception(result);
 
