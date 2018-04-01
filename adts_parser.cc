@@ -78,14 +78,14 @@ Result AdtsParser::feed(const UI08 *buffer, Size *bufferSize, Flags flags) {
     if (buffer == nullptr || bufferSize == nullptr || *bufferSize == 0) {
         return SUCCESS;
     }
-    freeSpace = bits.GetBytesFree();
+    freeSpace = bits.getBytesFree();
     if (*bufferSize > freeSpace) {
         *bufferSize = freeSpace;
     }
     if (*bufferSize == 0) {
         return SUCCESS;
     }
-    return bits.WriteBytes(buffer, *bufferSize);
+    return bits.writeBytes(buffer, *bufferSize);
 }
 
 Result AdtsParser::findFrame(AacFrame &frame) {
@@ -94,7 +94,7 @@ Result AdtsParser::findFrame(AacFrame &frame) {
     Result result;
 
     /* align to the start of the next byte */
-    bits.ByteAlign();
+    bits.byteAlign();
 
     /* find a frame header */
     result = findHeader(raw_header);
@@ -110,14 +110,14 @@ Result AdtsParser::findFrame(AacFrame &frame) {
     }
 
     /* check if we have enough data to peek at the next header */
-    available = bits.GetBytesAvailable();
+    available = bits.getBytesAvailable();
     if (available >= adts_header.frameLength + ADTS_HEADER_SIZE) {
         // enough to peek at the header of the next frame
         unsigned char peek_raw_header[ADTS_HEADER_SIZE];
 
-        bits.SkipBytes(adts_header.frameLength);
-        bits.PeekBytes(peek_raw_header, ADTS_HEADER_SIZE);
-        bits.SkipBytes(-((int)adts_header.frameLength));
+        bits.skipBytes(adts_header.frameLength);
+        bits.peekBytes(peek_raw_header, ADTS_HEADER_SIZE);
+        bits.skipBytes(-((int) adts_header.frameLength));
 
         /* check the header */
         AdtsHeader peek_adts_header(peek_raw_header);
@@ -136,7 +136,7 @@ Result AdtsParser::findFrame(AacFrame &frame) {
         return ERROR_NOT_ENOUGH_DATA;
     }
 
-    bits.SkipBytes(ADTS_HEADER_SIZE);
+    bits.skipBytes(ADTS_HEADER_SIZE);
 
     /* fill in the frame info */
     frame.info.standard = (adts_header.id == 1 ? AAC_STANDARD_MPEG2 : AAC_STANDARD_MPEG4);
@@ -163,7 +163,7 @@ Result AdtsParser::findFrame(AacFrame &frame) {
 
     /* skip crc if present */
     if (adts_header.protectionAbsent == 0) {
-        bits.SkipBits(16);
+        bits.skipBits(16);
     }
 
     /* set the frame source */
@@ -176,25 +176,25 @@ Result AdtsParser::skip(Size size) {
 }
 
 Size AdtsParser::getBytesFree() {
-    return bits.GetBytesFree();
+    return bits.getBytesFree();
 }
 
 Size AdtsParser::getBytesAvailable() {
-    return bits.GetBytesAvailable();
+    return bits.getBytesAvailable();
 }
 
 Result AdtsParser::findHeader(UI08 *header) {
-    Size available = bits.GetBytesAvailable();
+    Size available = bits.getBytesAvailable();
     while (available-- >= ADTS_HEADER_SIZE) {
-        bits.PeekBytes(header, 2);
+        bits.peekBytes(header, 2);
 
         if ((((header[0] << 8) | header[1]) & ADTS_SYNC_MASK) == ADTS_SYNC_PATTERN) {
             /* found a sync pattern, read the entire the header */
-            bits.PeekBytes(header, ADTS_HEADER_SIZE);
+            bits.peekBytes(header, ADTS_HEADER_SIZE);
 
             return SUCCESS;
         } else {
-            bits.ReadByte(); // skip
+            bits.readByte(); // skip
         }
     }
     return ERROR_NOT_ENOUGH_DATA;

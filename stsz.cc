@@ -39,7 +39,7 @@ Stsz::Stsz(UI32 size, UI08 version, UI32 flags, ByteStream &stream) : Atom(ATOM_
             return;
         }
         for (unsigned int i = 0; i < sampleCount; i++) {
-            entries[i] = BytesToUInt32BE(&buffer[i * 4]);
+            entries[i] = bytesToUInt32BE(&buffer[i * 4]);
         }
         delete[] buffer;
     }

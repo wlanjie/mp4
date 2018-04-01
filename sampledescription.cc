@@ -17,8 +17,8 @@ SampleDescription::SampleDescription(SampleDescription::Type type,
         type(type),
         format(format) {
     if (details) {
-        for (List<Atom>::Item* item = details->getChildren().FirstItem(); item; item = item->GetNext()) {
-            Atom* atom = item->GetData();
+        for (List<Atom>::Item* item = details->getChildren().firstItem(); item; item = item->getNext()) {
+            Atom* atom = item->getData();
             if (atom) {
                 Atom* clone = atom->clone();
                 if (clone) {
@@ -83,8 +83,8 @@ SampleDescription *SampleDescription::clone(Result *result) {
 
 Result SampleDescription::getCodecString(String &codec) {
     char coding[5];
-    FormatFourChars(coding, format);
-    codec.Assign(coding, 4);
+    formatFourChars(coding, format);
+    codec.assign(coding, 4);
     return SUCCESS;
 }
 
@@ -93,10 +93,10 @@ Atom *SampleDescription::toAtom() const {
 }
 
 Atom *GenericVideoSampleDescription::toAtom() const {
-    auto* sampleEntry = new VisualSampleEntry(format, width, height, depth, compressorName.GetChars());
+    auto* sampleEntry = new VisualSampleEntry(format, width, height, depth, compressorName.getChars());
     AtomParent& details = const_cast<AtomParent&>(this->details);
-    for (List<Atom>::Item* item = details.getChildren().FirstItem(); item; item = item->GetNext()) {
-        Atom* child = item->GetData();
+    for (List<Atom>::Item* item = details.getChildren().firstItem(); item; item = item->getNext()) {
+        Atom* child = item->getData();
         sampleEntry->addChild(child->clone());
     }
     return SampleDescription::toAtom();
@@ -105,8 +105,8 @@ Atom *GenericVideoSampleDescription::toAtom() const {
 Atom *GenericAudioSampleDescription::toAtom() const {
     auto* sampleEntry = new AudioSampleEntry(format, sampleRate << 16, sampleSize, channelCount);
     AtomParent& details = const_cast<AtomParent&>(this->details);
-    for (List<Atom>::Item* item = details.getChildren().FirstItem(); item; item = item->GetNext()) {
-        auto* child = item->GetData();
+    for (List<Atom>::Item* item = details.getChildren().firstItem(); item; item = item->getNext()) {
+        auto* child = item->getData();
         sampleEntry->addChild(child->clone());
     }
     return sampleEntry;
@@ -340,7 +340,7 @@ MpegAudioSampleDescription::MpegAudioSampleDescription(MpegSampleDescription::OT
 
 Result MpegAudioSampleDescription::getCodecString(String &codec) {
     char coding[5];
-    FormatFourChars(coding, getFormat());
+    formatFourChars(coding, getFormat());
     char workspace[64];
     workspace[0] = 0;
     if (getFormat() == SAMPLE_FORMAT_MP4A) {

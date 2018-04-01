@@ -15,32 +15,29 @@ class List
 {
 public:
     // types
-    class Item
-    {
+    class Item {
     public:
         // types
-        class Operator
-        {
+        class Operator {
         public:
             // methods
             virtual ~Operator() {}
             virtual Result action(T* data) const = 0;
         };
 
-        class Finder
-        {
+        class Finder {
         public:
             // methods
             virtual ~Finder() {}
-            virtual Result Test(T* data) const = 0;
+            virtual Result test(T* data) const = 0;
         };
 
         // methods
         Item(T* data) : m_Data(data), m_Next(0), m_Prev(0) {}
         ~Item() {}
-        Item* GetNext() { return m_Next; }
-        Item* GetPrev() { return m_Prev; }
-        T*    GetData() { return m_Data; }
+        Item* getNext() { return m_Next; }
+        Item* getPrev() { return m_Prev; }
+        T*    getData() { return m_Data; }
 
     private:
         // members
@@ -55,30 +52,30 @@ public:
     // methods
     List<T>(): m_ItemCount(0), m_Head(0), m_Tail(0) {}
     virtual     ~List<T>();
-    Result   Clear();
-    Result   Add(T* data);
-    Result   Add(Item* item);
-    Result   Remove(Item* item);
-    Result   Remove(T* data);
-    Result   Insert(Item* where, T* data);
-    Result   Get(Ordinal idx, T*& data) const;
-    Result   PopHead(T*& data);
-    Result   Apply(const typename Item::Operator& op) const;
-    Result   ApplyUntilFailure(const typename Item::Operator& op) const;
-    Result   ApplyUntilSuccess(const typename Item::Operator& op) const ;
-    Result   ReverseApply(const typename Item::Operator& op) const;
-    Result   Find(const typename Item::Finder& finder, T*& data) const;
-    Result   ReverseFind(const typename Item::Finder& finder, T*& data) const;
-    Result   DeleteReferences();
-    Cardinal ItemCount() const { return m_ItemCount; }
-    Item*        FirstItem() const { return m_Head; }
-    Item*        LastItem()  const { return m_Tail; }
+    Result   clear();
+    Result   add(T *data);
+    Result   add(Item *item);
+    Result   remove(Item *item);
+    Result   remove(T *data);
+    Result   insert(Item *where, T *data);
+    Result   get(Ordinal idx, T *&data) const;
+    Result   popHead(T *&data);
+    Result   apply(const typename Item::Operator &op) const;
+    Result   applyUntilFailure(const typename Item::Operator &op) const;
+    Result   applyUntilSuccess(const typename Item::Operator &op) const ;
+    Result   reverseApply(const typename Item::Operator &op) const;
+    Result   find(const typename Item::Finder &finder, T *&data) const;
+    Result   reverseFind(const typename Item::Finder &finder, T *&data) const;
+    Result   deleteReferences();
+    Cardinal itemCount() const { return m_ItemCount; }
+    Item* firstItem() const { return m_Head; }
+    Item* lastItem()  const { return m_Tail; }
 
 protected:
     // members
     Cardinal m_ItemCount;
-    Item*        m_Head;
-    Item*        m_Tail;
+    Item*    m_Head;
+    Item*    m_Tail;
 
 private:
     // these cannot be used
@@ -89,14 +86,11 @@ private:
 template <typename T>
 List<T>::~List()
 {
-    Clear();
+    clear();
 }
 
 template <typename T>
-inline
-Result
-List<T>::Clear()
-{
+inline Result List<T>::clear() {
     Item* item = m_Head;
 
     while (item) {
@@ -111,17 +105,12 @@ List<T>::Clear()
 }
 
 template <typename T>
-inline
-Result
-List<T>::Add(T* data)
-{
-    return Add(new Item(data));
+inline Result List<T>::add(T *data) {
+    return add(new Item(data));
 }
 
 template <typename T>
-Result
-List<T>::Add(Item* item)
-{
+Result List<T>::add(Item *item) {
     // add element at the tail
     if (m_Tail) {
         item->m_Prev = m_Tail;
@@ -142,9 +131,7 @@ List<T>::Add(Item* item)
 }
 
 template <typename T>
-Result
-List<T>::Remove(Item* item)
-{
+Result List<T>::remove(Item *item) {
     if (item->m_Prev) {
         // item is not the head
         if (item->m_Next) {
@@ -178,15 +165,13 @@ List<T>::Remove(Item* item)
 }
 
 template <typename T>
-Result
-List<T>::Remove(T* data)
-{
+Result List<T>::remove(T *data) {
     Item* item = m_Head;
 
     while (item) {
         if (item->m_Data == data) {
             // delete item
-            return Remove(item);
+            return remove(item);
         }
         item = item->m_Next;
     }
@@ -195,9 +180,7 @@ List<T>::Remove(T* data)
 }
 
 template <typename T>
-Result
-List<T>::Insert(Item* where, T* data)
-{
+Result List<T>::insert(Item *where, T *data) {
     Item* item = new Item(data);
 
     if (where == NULL) {
@@ -219,7 +202,7 @@ List<T>::Insert(Item* where, T* data)
         // insert after the 'where' item
         if (where == m_Tail) {
             // add the item at the end
-            return Add(item);
+            return add(item);
         } else {
             // update the links
             item->m_Prev = where;
@@ -236,9 +219,7 @@ List<T>::Insert(Item* where, T* data)
 }
 
 template <typename T>
-Result
-List<T>::Get(Ordinal idx, T*& data) const
-{
+Result List<T>::get(Ordinal idx, T *&data) const {
     Item* item = m_Head;
 
     if (idx < m_ItemCount) {
@@ -252,9 +233,7 @@ List<T>::Get(Ordinal idx, T*& data) const
 }
 
 template <typename T>
-Result
-List<T>::PopHead(T*& data)
-{
+Result List<T>::popHead(T *&data) {
     // check that we have at least one item
     if (m_Head == NULL) {
         return ERROR_LIST_EMPTY;
@@ -280,10 +259,7 @@ List<T>::PopHead(T*& data)
 }
 
 template <typename T>
-inline
-Result
-List<T>::Apply(const typename Item::Operator& op) const
-{
+inline Result List<T>::apply(const typename Item::Operator &op) const {
     Item* item = m_Head;
 
     while (item) {
@@ -295,10 +271,7 @@ List<T>::Apply(const typename Item::Operator& op) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::ApplyUntilFailure(const typename Item::Operator& op) const
-{
+inline Result List<T>::applyUntilFailure(const typename Item::Operator &op) const {
     Item* item = m_Head;
 
     while (item) {
@@ -312,10 +285,7 @@ List<T>::ApplyUntilFailure(const typename Item::Operator& op) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::ApplyUntilSuccess(const typename Item::Operator& op) const
-{
+inline Result List<T>::applyUntilSuccess(const typename Item::Operator &op) const {
     Item* item = m_Head;
 
     while (item) {
@@ -329,9 +299,7 @@ List<T>::ApplyUntilSuccess(const typename Item::Operator& op) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::ReverseApply(const typename Item::Operator& op) const
+inline Result List<T>::reverseApply(const typename Item::Operator &op) const
 {
     Item* item = m_Tail;
 
@@ -346,14 +314,11 @@ List<T>::ReverseApply(const typename Item::Operator& op) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::Find(const typename Item::Finder& finder, T*& data) const
-{
+inline Result List<T>::find(const typename Item::Finder &finder, T *&data) const {
     Item* item = m_Head;
 
     while (item) {
-        if (finder.Test(item->m_Data) == SUCCESS) {
+        if (finder.test(item->m_Data) == SUCCESS) {
             data = item->m_Data;
             return SUCCESS;
         }
@@ -365,14 +330,11 @@ List<T>::Find(const typename Item::Finder& finder, T*& data) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::ReverseFind(const typename Item::Finder& finder, T*& data) const
-{
+inline Result List<T>::reverseFind(const typename Item::Finder &finder, T *&data) const {
     Item* item = m_Tail;
 
     while (item) {
-        if (finder.Test(item->m_Data) == SUCCESS) {
+        if (finder.test(item->m_Data) == SUCCESS) {
             data = item->m_Data;
             return SUCCESS;
         }
@@ -384,10 +346,7 @@ List<T>::ReverseFind(const typename Item::Finder& finder, T*& data) const
 }
 
 template <typename T>
-inline
-Result
-List<T>::DeleteReferences()
-{
+inline Result List<T>::deleteReferences() {
     Item* item = m_Head;
 
     while (item) {

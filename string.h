@@ -33,18 +33,18 @@ public:
     bool operator!=(const char* s) const { return !(*this == s); }
 
     // methods
-    Size    GetLength() const { return m_Length; }
-    const char* GetChars() const  { return m_Chars;  }
-    char*       UseChars()        { return m_Chars;  }
-    void        Assign(const char* chars, Size size);
-    int         Find(char c, unsigned int start = 0) const;
+    Size getLength() const { return m_Length; }
+    const char* getChars() const { return m_Chars;  }
+    char* useChars() { return m_Chars;  }
+    void assign(const char *chars, Size size);
+    int find(char c, unsigned int start = 0) const;
 
 private:
     // class members
     static char EmptyString;
 
     // members
-    char*    m_Chars;
+    char* m_Chars;
     Size m_Length;
 };
 

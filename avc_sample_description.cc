@@ -59,12 +59,12 @@ AvcSampleDescription::AvcSampleDescription(UI32 format,
 }
 
 Atom *AvcSampleDescription::toAtom() const {
-    return new AvcSampleEntry(format, width, height, depth, compressorName.GetChars(), &details);
+    return new AvcSampleEntry(format, width, height, depth, compressorName.getChars(), &details);
 }
 
 Result AvcSampleDescription::getCodecString(String &codec) {
     char coding[5];
-    FormatFourChars(coding, getFormat());
+    formatFourChars(coding, getFormat());
     char workspace[64];
     FormatString(workspace, sizeof(workspace), "%s.%02X%02X%02X", coding, getProfile(), getProfileCompatibility(), getLevel());
     codec = workspace;

@@ -3,7 +3,6 @@
 //
 
 #include "file.h"
-#include "mp4.h"
 
 namespace mp4 {
 
@@ -79,8 +78,8 @@ Result File::write(ByteStream &stream) {
     if (ftyp) {
         ftyp->write(stream);
     }
-    for (List<Atom>::Item* item = getChildren().FirstItem(); item; item = item->GetNext()) {
-        auto* atom = item->GetData();
+    for (List<Atom>::Item* item = getChildren().firstItem(); item; item = item->getNext()) {
+        auto* atom = item->getData();
         if (atom->getType() != ATOM_TYPE_MDAT && atom->getType() != ATOM_TYPE_FTYP && atom->getType() != ATOM_TYPE_MOOV) {
             atom->write(stream);
         }
@@ -96,8 +95,8 @@ Result File::write(ByteStream &stream) {
     Array<Array<UI64>*> trakChunkOffsetsBackup;
     Array<UI64> chunkOffsets;
     Result result = SUCCESS;
-    for (List<Track>::Item* item = movie->getTracks().FirstItem(); item; item = item->GetNext()) {
-        auto* track = item->GetData();
+    for (List<Track>::Item* item = movie->getTracks().firstItem(); item; item = item->getNext()) {
+        auto* track = item->getData();
         auto* trak = track->useTrakAtom();
         auto* chunkOffsetsBackup = new Array<UI64>();
         trakChunkOffsetsBackup.Append(chunkOffsetsBackup);
@@ -133,8 +132,8 @@ Result File::write(ByteStream &stream) {
     stream.writeUI32(ATOM_TYPE_MDAT);
 
     // write all tracks and restore the chunk offsets to their backed-up values
-    for (List<Track>::Item* item = movie->getTracks().FirstItem(); item; item = item->GetNext()) {
-        auto* track = item->GetData();
+    for (List<Track>::Item* item = movie->getTracks().firstItem(); item; item = item->getNext()) {
+        auto* track = item->getData();
         auto* trak = track->useTrakAtom();
         result = trak->setChunkOffsets(*trakChunkOffsetsBackup[t]);
 

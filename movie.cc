@@ -9,7 +9,7 @@ namespace mp4 {
 class TrackFinderById : public List<Track>::Item::Finder {
 public:
     TrackFinderById(UI32 trackId) : trackId(trackId) {}
-    Result Test(Track* track) const {
+    Result test(Track* track) const {
         return track->getId() == trackId ? SUCCESS : FAILURE;
     }
 private:
@@ -19,7 +19,7 @@ private:
 class TrackFinderByType : public List<Track>::Item::Finder {
 public:
     TrackFinderByType(Track::Type type, Ordinal index = 0) : type(type), index(index) {}
-    Result Test(Track* track) const {
+    Result test(Track* track) const {
         if (track->getType() == type && index-- == 0)  {
             return SUCCESS;
         } else {
@@ -46,16 +46,16 @@ Movie::Movie(Moov *moov, ByteStream &stream, bool transferMoovOwnerShip) :
     mvhd = DYNAMIC_CAST(Mvhd, moov->getChild(ATOM_TYPE_MVHD));
     UI32 timeScale = mvhd ? mvhd->getTimeScale() : 0;
     List<Trak>* traks = &moov->getTrakAtoms();
-    List<Trak>::Item* item = traks->FirstItem();
+    List<Trak>::Item* item = traks->firstItem();
     while (item) {
-        auto* track = new Track(*item->GetData(), stream, timeScale);
-        tracks.Add(track);
-        item = item->GetNext();
+        auto* track = new Track(*item->getData(), stream, timeScale);
+        tracks.add(track);
+        item = item->getNext();
     }
 }
 
 Movie::~Movie() {
-    tracks.DeleteReferences();
+    tracks.deleteReferences();
     if (moovIsOwned) {
         delete moov;
     }
@@ -63,19 +63,19 @@ Movie::~Movie() {
 
 Track *Movie::getTrack(UI32 trackId) {
     Track* track = nullptr;
-    auto result = tracks.Find(TrackFinderById(trackId), track);
+    auto result = tracks.find(TrackFinderById(trackId), track);
     return track;
 }
 
 Track *Movie::getTrack(Track::Type type, Ordinal index) {
     Track* track = nullptr;
-    tracks.Find(TrackFinderByType(type, index), track);
+    tracks.find(TrackFinderByType(type, index), track);
     return track;
 }
 
 Result Movie::addTrack(Track *track) {
     if (track->getId() == 0) {
-        track->setId(tracks.ItemCount() + 1);
+        track->setId(tracks.itemCount() + 1);
     }
     if (mvhd->getTimeScale() == 0) {
         mvhd->setTimeScale(track->getMediaTimeScale());
@@ -85,7 +85,7 @@ Result Movie::addTrack(Track *track) {
         mvhd->setDuration(track->getDuration());
     }
     track->attach(moov);
-    tracks.Add(track);
+    tracks.add(track);
     return SUCCESS;
 }
 

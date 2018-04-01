@@ -41,7 +41,7 @@ private:
 class DescriptorFinder : public List<Descriptor>::Item::Finder {
 public:
     DescriptorFinder(UI08 tag) : tag(tag) {}
-    Result Test(Descriptor* descriptor) const {
+    Result test(Descriptor* descriptor) const {
         return descriptor->getTag() == tag ? SUCCESS : FAILURE;
     }
 

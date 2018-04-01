@@ -319,14 +319,14 @@ Result AvcFrameParser::feed(const UI08 *nalUnit, Size nalUnitSize, AvcFrameParse
 
 static unsigned int readGolomb(BitReader& bits) {
     unsigned int leadingZeros = 0;
-    while (bits.ReadBit() == 0) {
+    while (bits.readBit() == 0) {
         leadingZeros++;
         if (leadingZeros > 32) {
             return 0;
         }
     }
     if (leadingZeros) {
-        return (1 << leadingZeros) - 1 + bits.ReadBits(leadingZeros);
+        return (1 << leadingZeros) - 1 + bits.readBits(leadingZeros);
     }
     return 0;
 }
@@ -344,15 +344,15 @@ Result AvcFrameParser::parseSPS(const unsigned char *data, unsigned int dataSize
     DataBuffer unescaped(data, dataSize);
     NalParser::unescape(unescaped);
     BitReader bits(unescaped.getData(), unescaped.getDataSize());
-    bits.SkipBits(8); // NAL Unit Type
+    bits.skipBits(8); // NAL Unit Type
 
-    sps.profileIdc = bits.ReadBits(8);
-    sps.constraintSet0Flag = bits.ReadBit();
-    sps.constraintSet1Flag = bits.ReadBit();
-    sps.constraintSet2Flag = bits.ReadBit();
-    sps.constraintSet3Flag = bits.ReadBit();
-    bits.SkipBits(4);
-    sps.levelIdc = bits.ReadBits(8);
+    sps.profileIdc = bits.readBits(8);
+    sps.constraintSet0Flag = bits.readBit();
+    sps.constraintSet1Flag = bits.readBit();
+    sps.constraintSet2Flag = bits.readBit();
+    sps.constraintSet3Flag = bits.readBit();
+    bits.skipBits(4);
+    sps.levelIdc = bits.readBits(8);
     sps.seqParameterSetId = readGolomb(bits);
     if (sps.seqParameterSetId > AVC_SPS_MAX_ID) {
         return ERROR_INVALID_FORMAT;
@@ -367,15 +367,15 @@ Result AvcFrameParser::parseSPS(const unsigned char *data, unsigned int dataSize
         sps.chromaFormatIdc = readGolomb(bits);
         sps.separateColourPlaneFlag = 0;
         if (sps.chromaFormatIdc == 3) {
-            sps.separateColourPlaneFlag = bits.ReadBit();
+            sps.separateColourPlaneFlag = bits.readBit();
         }
         sps.bitDepthLumaMinus8 = readGolomb(bits);
         sps.bitDepthChromaMinus8 = readGolomb(bits);
-        sps.qpprimeYZeroTransformBypassFlag = bits.ReadBit();
-        sps.seqScalingMatrixPresentFlag = bits.ReadBit();
+        sps.qpprimeYZeroTransformBypassFlag = bits.readBit();
+        sps.seqScalingMatrixPresentFlag = bits.readBit();
         if (sps.seqScalingMatrixPresentFlag) {
             for (int i = 0; i < (sps.chromaFormatIdc != 3 ? 8 : 12); i++) {
-                unsigned int seqScalingListPresentFlag = bits.ReadBit();
+                unsigned int seqScalingListPresentFlag = bits.readBit();
                 if (seqScalingListPresentFlag) {
                     if (i < 6) {
                         int lastScale = 8;
@@ -415,7 +415,7 @@ Result AvcFrameParser::parseSPS(const unsigned char *data, unsigned int dataSize
     if (sps.picOrderCntType == 0) {
         sps.log2MaxPicOrderCntLsbMinus4 = readGolomb(bits);
     } else if (sps.picOrderCntType == 1) {
-        sps.deltaPicOrderAlwaysZeroFlags = bits.ReadBit();
+        sps.deltaPicOrderAlwaysZeroFlags = bits.readBit();
         sps.offsetForNonRefPic = signedGolomb(readGolomb(bits));
         sps.offsetForTopToBottomField = signedGolomb(readGolomb(bits));
         sps.numRefFramesInPicOrderCntCycle = readGolomb(bits);
@@ -427,15 +427,15 @@ Result AvcFrameParser::parseSPS(const unsigned char *data, unsigned int dataSize
         }
     }
     sps.numRefFrames = readGolomb(bits);
-    sps.gapsInFrameNumValueAllowedFlag = bits.ReadBit();
+    sps.gapsInFrameNumValueAllowedFlag = bits.readBit();
     sps.picWidthInMbsMinus1 = readGolomb(bits);
     sps.picHeightInMapUnitsMinus1 = readGolomb(bits);
-    sps.frameMbsOnlyFlag = bits.ReadBit();
+    sps.frameMbsOnlyFlag = bits.readBit();
     if (!sps.frameMbsOnlyFlag) {
-        sps.mbAdaptiveFrameFieldFlag = bits.ReadBit();
+        sps.mbAdaptiveFrameFieldFlag = bits.readBit();
     }
-    sps.direct8x8InferenceFlag = bits.ReadBit();
-    sps.frameCroppingFlag = bits.ReadBit();
+    sps.direct8x8InferenceFlag = bits.readBit();
+    sps.frameCroppingFlag = bits.readBit();
     if (sps.frameCroppingFlag) {
         sps.frameCropLeftOffset = readGolomb(bits);
         sps.frameCropRightOffset = readGolomb(bits);
@@ -450,14 +450,14 @@ Result AvcFrameParser::parsePPS(const unsigned char *data, unsigned int dataSize
     DataBuffer unescaped(data, dataSize);
     NalParser::unescape(unescaped);
     BitReader bits(unescaped.getData(), unescaped.getDataSize());
-    bits.SkipBits(8); // NAL Unit Type
+    bits.skipBits(8); // NAL Unit Type
 
     pps.picParameterSetId = readGolomb(bits);
     if (pps.picParameterSetId > AVC_PPS_MAX_ID) {
         return ERROR_INVALID_FORMAT;
     }
-    pps.entropyCodingModeFlag = bits.ReadBit();
-    pps.picOrderPresentFlag = bits.ReadBit();
+    pps.entropyCodingModeFlag = bits.readBit();
+    pps.picOrderPresentFlag = bits.readBit();
     pps.numSliceGroupsMinus1 = readGolomb(bits);
     if (pps.numSliceGroupsMinus1 >= AVC_PPS_MAX_SLICE_GROUPS) {
         return ERROR_INVALID_FORMAT;
@@ -474,7 +474,7 @@ Result AvcFrameParser::parsePPS(const unsigned char *data, unsigned int dataSize
                 pps.bottomRight[i] = readGolomb(bits);
             }
         } else if (pps.sliceGroupMapType == 3 || pps.sliceGroupMapType == 4 || pps.sliceGroupMapType == 5) {
-            pps.sliceGroupChangeDirectionFlag = bits.ReadBit();
+            pps.sliceGroupChangeDirectionFlag = bits.readBit();
             pps.sliceGroupChangeRateMinus1 = readGolomb(bits);
         } else if (pps.sliceGroupMapType == 6) {
             pps.picSizeInMapUnitsMinus1 = readGolomb(bits);
@@ -490,20 +490,20 @@ Result AvcFrameParser::parsePPS(const unsigned char *data, unsigned int dataSize
                 numBitsPerSliceGroupId = 1;
             }
             for (unsigned int i = 0; i < pps.picSizeInMapUnitsMinus1; i++) {
-                bits.ReadBits(numBitsPerSliceGroupId);
+                bits.readBits(numBitsPerSliceGroupId);
             }
         }
     }
     pps.numRefIdx10ActiveMinus1 = readGolomb(bits);
     pps.numRefIdx11ActiveMinus1 = readGolomb(bits);
-    pps.weightedPredFlag = bits.ReadBit();
-    pps.weightedBipredIdc = bits.ReadBits(2);
+    pps.weightedPredFlag = bits.readBit();
+    pps.weightedBipredIdc = bits.readBits(2);
     pps.picInitQpMinus26 = signedGolomb(readGolomb(bits));
     pps.picInitQsMinus26 = signedGolomb(readGolomb(bits));
     pps.chromaQpIndexOffset = signedGolomb(readGolomb(bits));
-    pps.deblockingFilterControlPresentFlag = bits.ReadBit();
-    pps.constrainedIntraPredFlag = bits.ReadBit();
-    pps.redundantPicCntPresentFlag = bits.ReadBit();
+    pps.deblockingFilterControlPresentFlag = bits.readBit();
+    pps.constrainedIntraPredFlag = bits.readBit();
+    pps.redundantPicCntPresentFlag = bits.readBit();
     return SUCCESS;
 }
 
@@ -532,20 +532,20 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
         return ERROR_INVALID_FORMAT;
     }
     if (sps->seqScalingMatrixPresentFlag) {
-        sliceHeader.colourPlaneId = bits.ReadBits(2);
+        sliceHeader.colourPlaneId = bits.readBits(2);
     }
-    sliceHeader.frameNum = bits.ReadBits(sps->log2MaxFrameNumMinus4 + 4);
+    sliceHeader.frameNum = bits.readBits(sps->log2MaxFrameNumMinus4 + 4);
     if (!sps->frameMbsOnlyFlag) {
-        sliceHeader.fieldPicFlag = bits.ReadBit();
+        sliceHeader.fieldPicFlag = bits.readBit();
         if (sliceHeader.fieldPicFlag) {
-            sliceHeader.bottomFieldFlag = bits.ReadBit();
+            sliceHeader.bottomFieldFlag = bits.readBit();
         }
     }
     if (nalUnitType == AVC_NAL_UNIT_TYPE_CODED_SLICE_OF_IDR_PICTURE) {
         sliceHeader.idrPicId = readGolomb(bits);
     }
     if (sps->picOrderCntType == 0) {
-        sliceHeader.picOrderCntLsb = bits.ReadBits(sps->log2MaxPicOrderCntLsbMinus4 + 4);
+        sliceHeader.picOrderCntLsb = bits.readBits(sps->log2MaxPicOrderCntLsbMinus4 + 4);
         if (pps->picOrderPresentFlag && !sliceHeader.fieldPicFlag) {
             sliceHeader.deltaPicOrderCnt[0] = signedGolomb(readGolomb(bits));
         }
@@ -561,10 +561,10 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
     }
     unsigned int sliceType = sliceHeader.sliceType % 5;
     if (sliceType == AVC_SLICE_TYPE_B) {
-        sliceHeader.directSpatialMvPredFlag = bits.ReadBit();
+        sliceHeader.directSpatialMvPredFlag = bits.readBit();
     }
     if (sliceType == AVC_SLICE_TYPE_P || sliceType == AVC_SLICE_TYPE_SP || sliceType == AVC_SLICE_TYPE_B) {
-        sliceHeader.numRefIdxActiveOverrideFlag = bits.ReadBit();
+        sliceHeader.numRefIdxActiveOverrideFlag = bits.readBit();
         if (sliceHeader.numRefIdxActiveOverrideFlag) {
             sliceHeader.numRefIdxL0ActiveMinus1 = readGolomb(bits);
             if ((sliceHeader.sliceType % 5) == AVC_SLICE_TYPE_B) {
@@ -576,7 +576,7 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
         }
     }
     if ((sliceHeader.sliceType % 5) != 2 && (sliceHeader.sliceType % 5) != 4) {
-        sliceHeader.refPicListReorderingFlagL0 = bits.ReadBit();
+        sliceHeader.refPicListReorderingFlagL0 = bits.readBit();
         if (sliceHeader.refPicListReorderingFlagL0) {
             do {
                 sliceHeader.reorderingOfPicNumsIdc = readGolomb(bits);
@@ -589,7 +589,7 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
         }
     }
     if ((sliceHeader.sliceType % 5) == 1) {
-        sliceHeader.refPicListReorderingFlagL1 = bits.ReadBit();
+        sliceHeader.refPicListReorderingFlagL1 = bits.readBit();
         if (sliceHeader.refPicListReorderingFlagL1) {
             do {
                 sliceHeader.reorderingOfPicNumsIdc = readGolomb(bits) ;
@@ -613,13 +613,13 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
         }
 
         for (unsigned int i = 0; i <= sliceHeader.numRefIdxL0ActiveMinus1; i++) {
-            unsigned int lumaWeightL0Flag = bits.ReadBit();
+            unsigned int lumaWeightL0Flag = bits.readBit();
             if (lumaWeightL0Flag) {
                 readGolomb(bits);
                 readGolomb(bits);
             }
             if (sps->chromaFormatIdc != 0) {
-                unsigned int chromaWeightL0Flag = bits.ReadBit();
+                unsigned int chromaWeightL0Flag = bits.readBit();
                 if (chromaWeightL0Flag) {
                     for (unsigned int j = 0; j < 2; j++) {
                         readGolomb(bits);
@@ -630,13 +630,13 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
         }
         if ((sliceHeader.sliceType % 5) == 1) {
             for (unsigned int i = 0; i <= sliceHeader.numRefIdxL1ActiveMinus1; i++) {
-                unsigned int lumaWeightL1Flag = bits.ReadBit();
+                unsigned int lumaWeightL1Flag = bits.readBit();
                 if (lumaWeightL1Flag) {
                     readGolomb(bits);
                     readGolomb(bits);
                 }
                 if (sps->chromaFormatIdc != 0) {
-                    unsigned int chromaWeightL1Flag = bits.ReadBit();
+                    unsigned int chromaWeightL1Flag = bits.readBit();
                     if (lumaWeightL1Flag) {
                         for (unsigned int j = 0; j < 2; j++) {
                             readGolomb(bits);
@@ -651,10 +651,10 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
     if (nalRefIdc != 0) {
         // dec_ref_pic_marking
         if (nalUnitType == AVC_NAL_UNIT_TYPE_CODED_SLICE_OF_IDR_PICTURE) {
-            sliceHeader.noOutputOfPriorPicsFlag = bits.ReadBit();
-            sliceHeader.longTermReferenceFlag = bits.ReadBit();
+            sliceHeader.noOutputOfPriorPicsFlag = bits.readBit();
+            sliceHeader.longTermReferenceFlag = bits.readBit();
         } else {
-            unsigned int adaptiveRefPicMarkingModeFlag = bits.ReadBit();
+            unsigned int adaptiveRefPicMarkingModeFlag = bits.readBit();
             if (adaptiveRefPicMarkingModeFlag) {
                 unsigned int memoryManagementControlOperation = 0;
                 do {
@@ -681,7 +681,7 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
     sliceHeader.sliceQpDelta = readGolomb(bits);
     if (sliceType == AVC_SLICE_TYPE_SP || sliceType == AVC_SLICE_TYPE_SI) {
         if (sliceType == AVC_SLICE_TYPE_SP) {
-            sliceHeader.spForSwitchFlag = bits.ReadBit();
+            sliceHeader.spForSwitchFlag = bits.readBit();
         }
         sliceHeader.sliceQsDelta = signedGolomb(readGolomb(bits));
     }
@@ -699,7 +699,7 @@ Result AvcFrameParser::parseSliceHeader(const UI08 *data,
     }
 
     /* compute the size */
-    sliceHeader.size = bits.GetBitsRead();
+    sliceHeader.size = bits.getBitsRead();
 
     return 0;
 }

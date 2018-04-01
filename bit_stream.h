@@ -35,41 +35,41 @@ public:
     ~BitStream();
 
     // methods
-    Result Reset();
+    Result reset();
 
-    Size GetContiguousBytesFree();
+    Size getContiguousBytesFree();
 
-    Size GetBytesFree();
+    Size getBytesFree();
 
-    Result WriteBytes(const UI08 *bytes, Size byte_count);
+    Result writeBytes(const UI08 *bytes, Size byte_count);
 
-    Size GetContiguousBytesAvailable();
+    Size getContiguousBytesAvailable();
 
-    Size GetBytesAvailable();
+    Size getBytesAvailable();
 
-    UI08 ReadByte();
+    UI08 readByte();
 
-    Result ReadBytes(UI08 *bytes, Size byte_count);
+    Result readBytes(UI08 *bytes, Size byte_count);
 
-    UI08 PeekByte();
+    UI08 peekByte();
 
-    Result PeekBytes(UI08 *bytes, Size byte_count);
+    Result peekBytes(UI08 *bytes, Size byte_count);
 
-    int ReadBit();
+    int readBit();
 
-    UI32 ReadBits(unsigned int bit_count);
+    UI32 readBits(unsigned int bit_count);
 
-    int PeekBit();
+    int peekBit();
 
-    UI32 PeekBits(unsigned int bit_count);
+    UI32 peekBits(unsigned int bit_count);
 
-    Result SkipBytes(Size byte_count);
+    Result skipBytes(Size byte_count);
 
-    void SkipBit();
+    void skipBit();
 
-    void SkipBits(unsigned int bit_count);
+    void skipBits(unsigned int bit_count);
 
-    Result ByteAlign();
+    Result byteAlign();
 
     // members
     UI08 *m_Buffer;
@@ -81,7 +81,7 @@ public:
 
 private:
     // methods
-    BitsWord ReadCache() const;
+    BitsWord readCache() const;
 };
 
 #define BIT_MASK(_n) ((1<<(_n))-1)
@@ -95,8 +95,7 @@ private:
 #define BITSTREAM_POINTER_ADD(pointer, offset) \
     ((pointer) = BITSTREAM_POINTER_OFFSET(pointer, offset))
 
-inline BitsWord
-BitStream::ReadCache() const {
+inline BitsWord BitStream::readCache() const {
     unsigned int pos = m_Out;
     BitsWord cache;
 
@@ -121,8 +120,7 @@ BitStream::ReadCache() const {
     return cache;
 }
 
-inline UI32
-BitStream::ReadBits(unsigned int n) {
+inline UI32 BitStream::readBits(unsigned int n) {
     BitsWord result;
     if (m_BitsCached >= n) {
         /* we have enough bits in the cache to satisfy the request */
@@ -134,7 +132,7 @@ BitStream::ReadBits(unsigned int n) {
 
         /* read the next word */
         {
-            word = ReadCache();
+            word = readCache();
             m_Out = BITSTREAM_POINTER_OFFSET(m_Out, WORD_BYTES);
         }
 
@@ -151,14 +149,13 @@ BitStream::ReadBits(unsigned int n) {
     return result;
 }
 
-inline int
-BitStream::ReadBit() {
+inline int BitStream::readBit() {
     BitsWord result;
     if (m_BitsCached == 0) {
         /* the cache is empty */
 
         /* read the next word into the cache */
-        m_Cache = ReadCache();
+        m_Cache = readCache();
         m_Out = BITSTREAM_POINTER_OFFSET(m_Out, WORD_BYTES);
         m_BitsCached = WORD_BITS - 1;
 
@@ -171,14 +168,13 @@ BitStream::ReadBit() {
     return result;
 }
 
-inline UI32
-BitStream::PeekBits(unsigned int n) {
+inline UI32 BitStream::peekBits(unsigned int n) {
     /* we have enough bits in the cache to satisfy the request */
     if (m_BitsCached >= n) {
         return (m_Cache >> (m_BitsCached - n)) & BIT_MASK(n);
     } else {
         /* not enough bits in the cache, read the next word */
-        BitsWord word = ReadCache();
+        BitsWord word = readCache();
 
         /* combine the new word and the cache, and update the state */
         BitsWord cache = m_Cache & BIT_MASK(m_BitsCached);
@@ -187,12 +183,11 @@ BitStream::PeekBits(unsigned int n) {
     }
 }
 
-inline int
-BitStream::PeekBit() {
+inline int BitStream::peekBit() {
     /* the cache is empty */
     if (m_BitsCached == 0) {
         /* read the next word into the cache */
-        BitsWord cache = ReadCache();
+        BitsWord cache = readCache();
 
         /* return the first bit */
         return cache >> (WORD_BITS - 1);
@@ -202,8 +197,7 @@ BitStream::PeekBit() {
     }
 }
 
-inline void
-BitStream::SkipBits(unsigned int n) {
+inline void BitStream::skipBits(unsigned int n) {
     if (n <= m_BitsCached) {
         m_BitsCached -= n;
     } else {
@@ -213,7 +207,7 @@ BitStream::SkipBits(unsigned int n) {
             n -= WORD_BITS;
         }
         if (n) {
-            m_Cache = ReadCache();
+            m_Cache = readCache();
             m_BitsCached = WORD_BITS - n;
             m_Out = BITSTREAM_POINTER_OFFSET(m_Out, WORD_BYTES);
         } else {
@@ -223,10 +217,9 @@ BitStream::SkipBits(unsigned int n) {
     }
 }
 
-inline void
-BitStream::SkipBit() {
+inline void BitStream::skipBit() {
     if (m_BitsCached == 0) {
-        m_Cache = ReadCache();
+        m_Cache = readCache();
         m_Out = BITSTREAM_POINTER_OFFSET(m_Out, WORD_BYTES);
         m_BitsCached = WORD_BITS - 1;
     } else {
@@ -234,16 +227,14 @@ BitStream::SkipBit() {
     }
 }
 
-inline UI08
-BitStream::ReadByte() {
-    SkipBits(m_BitsCached & 7);
-    return (UI08) ReadBits(8);
+inline UI08 BitStream::readByte() {
+    skipBits(m_BitsCached & 7);
+    return (UI08) readBits(8);
 }
 
-inline UI08
-BitStream::PeekByte() {
+inline UI08 BitStream::peekByte() {
     unsigned int extra_bits = m_BitsCached & 7;
-    return (UI08) (PeekBits(extra_bits + 8) & 0xFF);
+    return (UI08) (peekBits(extra_bits + 8) & 0xFF);
 }
 
 }

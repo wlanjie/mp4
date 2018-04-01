@@ -44,12 +44,12 @@ Stsd::Stsd(UI32 size, UI08 version, UI32 flags, ByteStream &stream, AtomFactory 
         Atom* atom;
         if (SUCCEEDED(factory.createAtomFromStream(stream, bytesAvailable, atom))) {
             atom->setParent(this);
-            children.Add(atom);
+            children.add(atom);
         }
     }
     factory.popContext();
-    sampleDescriptions.EnsureCapacity(children.ItemCount());
-    for (Ordinal i = 0; i < children.ItemCount(); i++) {
+    sampleDescriptions.EnsureCapacity(children.itemCount());
+    for (Ordinal i = 0; i < children.itemCount(); i++) {
         sampleDescriptions.Append(nullptr);
     }
 }
@@ -61,26 +61,26 @@ Stsd::~Stsd() {
 }
 
 Result Stsd::writeFields(ByteStream &stream) {
-    Result result = stream.writeUI32(children.ItemCount());
+    Result result = stream.writeUI32(children.itemCount());
     if (FAILED(result)) {
         return result;
     }
-    return children.Apply(AtomListWriter(stream));
+    return children.apply(AtomListWriter(stream));
 }
 
 Cardinal Stsd::getSampleDescriptionCount() {
-    return children.ItemCount();
+    return children.itemCount();
 }
 
 SampleDescription *Stsd::getSampleDescription(Ordinal index) {
-    if (index >= children.ItemCount()) {
+    if (index >= children.itemCount()) {
         return nullptr;
     }
     if (sampleDescriptions[index]) {
         return sampleDescriptions[index];
     }
     Atom* entry;
-    children.Get(index, entry);
+    children.get(index, entry);
     SampleEntry* sampleEntry = DYNAMIC_CAST(SampleEntry, entry);
     if (sampleEntry == nullptr) {
 //        sampleDescriptions[index] = new
@@ -92,17 +92,17 @@ SampleDescription *Stsd::getSampleDescription(Ordinal index) {
 }
 
 SampleEntry *Stsd::getSampleEntry(Ordinal index) {
-    if (index >- children.ItemCount()) {
+    if (index >-children.itemCount()) {
         return nullptr;
     }
     Atom* entry;
-    children.Get(index, entry);
+    children.get(index, entry);
     return DYNAMIC_CAST(SampleEntry, entry);
 }
 
 void Stsd::onChildChanged(Atom *child) {
     UI64 size = getHeaderSize() + 4;
-    children.Apply(AtomSizeAdder(size));
+    children.apply(AtomSizeAdder(size));
     size32 = (UI32) size;
     if (parent) {
         parent->onChildChanged(child);

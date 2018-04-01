@@ -6,14 +6,14 @@ namespace mp4 {
 // TODO name
 BitStream::BitStream() {
     m_Buffer = new UI08[BITSTREAM_BUFFER_SIZE];
-    Reset();
+    reset();
 }
 
 BitStream::~BitStream() {
     delete[] m_Buffer;
 }
 
-Result BitStream::Reset() {
+Result BitStream::reset() {
     m_In = 0;
     m_Out = 0;
     m_BitsCached = 0;
@@ -23,14 +23,14 @@ Result BitStream::Reset() {
     return SUCCESS;
 }
 
-Result BitStream::ByteAlign() {
+Result BitStream::byteAlign() {
     unsigned int to_flush = m_BitsCached & 7;
-    if (to_flush > 0) SkipBits(to_flush);
+    if (to_flush > 0) skipBits(to_flush);
 
     return SUCCESS;
 }
 
-Size BitStream::GetContiguousBytesFree() {
+Size BitStream::getContiguousBytesFree() {
     return
             (m_In < m_Out) ?
             (m_Out - m_In - 1) :
@@ -38,21 +38,21 @@ Size BitStream::GetContiguousBytesFree() {
              (BITSTREAM_BUFFER_SIZE - m_In));
 }
 
-Size BitStream::GetBytesFree() {
+Size BitStream::getBytesFree() {
     return
             (m_In < m_Out) ?
             (m_Out - m_In - 1) :
             (BITSTREAM_BUFFER_SIZE + (m_Out - m_In) - 1);
 }
 
-Result BitStream::WriteBytes(const UI08 *bytes,
-                      Size byte_count) {
+Result BitStream::writeBytes(const UI08 *bytes,
+                             Size byte_count) {
     /* check parameters */
     if (byte_count == 0) return SUCCESS;
     if (bytes == NULL) return ERROR_INVALID_PARAMETERS;
 
     /* check that we have enough space */
-    if (GetBytesFree() < byte_count) {
+    if (getBytesFree() < byte_count) {
         return FAILURE;
     }
 
@@ -77,35 +77,35 @@ Result BitStream::WriteBytes(const UI08 *bytes,
     return SUCCESS;
 }
 
-Size BitStream::GetContiguousBytesAvailable() {
+Size BitStream::getContiguousBytesAvailable() {
     return
             (m_Out <= m_In) ?
             (m_In - m_Out) :
             (BITSTREAM_BUFFER_SIZE - m_Out);
 }
 
-Size BitStream::GetBytesAvailable() {
+Size BitStream::getBytesAvailable() {
     return
             (m_Out <= m_In) ?
             (m_In - m_Out) :
             (m_In + (BITSTREAM_BUFFER_SIZE - m_Out));
 }
 
-Result BitStream::ReadBytes(UI08 *bytes,
-                     Size byte_count) {
+Result BitStream::readBytes(UI08 *bytes,
+                            Size byte_count) {
     if (byte_count == 0 || bytes == NULL) {
         return ERROR_INVALID_PARAMETERS;
     }
 
     /* Gets bytes from the cache */
-    ByteAlign();
+    byteAlign();
     while (m_BitsCached > 0 && byte_count > 0) {
-        *bytes = (UI08) ReadBits(8);
+        *bytes = (UI08) readBits(8);
         ++bytes;
         --byte_count;
     }
 
-    /* Get other bytes */
+    /* get other bytes */
     if (byte_count > 0) {
         if (m_Out < m_In) {
             CopyMemory(bytes, m_Buffer + m_Out, byte_count);
@@ -129,8 +129,8 @@ Result BitStream::ReadBytes(UI08 *bytes,
     return SUCCESS;
 }
 
-Result BitStream::PeekBytes(UI08 *bytes,
-                     Size byte_count) {
+Result BitStream::peekBytes(UI08 *bytes,
+                            Size byte_count) {
     int bits_cached_byte;
 
     if (byte_count == 0 || bytes == NULL) {
@@ -146,7 +146,7 @@ Result BitStream::PeekBytes(UI08 *bytes,
         bits_cached_byte -= 8;
     }
 
-    /* Get other bytes */
+    /* get other bytes */
     if (byte_count > 0) {
         if (m_In > m_Out) {
             CopyMemory(bytes, m_Buffer + m_Out, byte_count);
@@ -171,7 +171,7 @@ Result BitStream::PeekBytes(UI08 *bytes,
     return SUCCESS;
 }
 
-Result BitStream::SkipBytes(Size byte_count) {
+Result BitStream::skipBytes(Size byte_count) {
     BITSTREAM_POINTER_ADD(m_Out, byte_count);
     return SUCCESS;
 }

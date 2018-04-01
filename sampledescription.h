@@ -55,7 +55,7 @@ public:
     UI16 getWidth() { return width; }
     UI16 getHeight() { return height; }
     UI16 getDepth() { return depth; }
-    const char* getCompressorName() { return compressorName.GetChars(); }
+    const char* getCompressorName() { return compressorName.getChars(); }
 
 protected:
     UI16 width;

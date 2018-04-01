@@ -137,7 +137,7 @@ class AtomFinder : public List<Atom>::Item::Finder {
 public:
     AtomFinder(Atom::Type type, Ordinal index = 0) : type(type), index(index) {}
 
-    Result Test(Atom *atom) const {
+    Result test(Atom *atom) const {
         if (atom->getType() == type) {
             if (index-- == 0) {
                 return SUCCESS;

@@ -32,7 +32,7 @@ const int ERROR_BUFFER_TOO_SMALL                = -21;
 const int ERROR_NOT_ENOUGH_DATA                 = -22;
 const int ERROR_NOT_ENOUGH_SPACE                = -23;
 
-const char* ResultText(int result);
+const char* resultText(int result);
 // TODO define
 #define FAILED(result) ((result) != SUCCESS)
 #define SUCCEEDED(result) ((result) == SUCCESS)

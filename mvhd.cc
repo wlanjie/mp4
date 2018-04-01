@@ -121,7 +121,7 @@ Result Mvhd::writeFields(ByteStream &stream) {
 }
 
 UI32 Mvhd::getDurationMs() {
-    return timeScale ? (UI32) ConvertTime(duration, timeScale, 1000) : 0;
+    return timeScale ? (UI32) convertTime(duration, timeScale, 1000) : 0;
 }
 
 }

@@ -13,7 +13,7 @@ public:
         if (atom->getType() == ATOM_TYPE_TRAK) {
             Trak* trak = DYNAMIC_CAST(Trak, atom);
             if (trak) {
-                traks->Add(trak);
+                traks->add(trak);
             }
         }
         return SUCCESS;
@@ -32,12 +32,12 @@ Moov::Moov() :
 Moov::Moov(Size size, ByteStream &stream, AtomFactory &factory) :
         Container(ATOM_TYPE_MOOV, size, false, stream, factory),
         timeScale(0) {
-    children.Apply(TrakCollector(&traks));
+    children.apply(TrakCollector(&traks));
 }
 
 Result Moov::adjustChunkOffsets(SI64 offset) {
-    for (List<Trak>::Item* item = traks.FirstItem(); item; item = item->GetNext()) {
-        Trak* trak = item->GetData();
+    for (List<Trak>::Item* item = traks.firstItem(); item; item = item->getNext()) {
+        Trak* trak = item->getData();
         trak->adjustChunkOffsets(offset);
     }
     return SUCCESS;
@@ -47,7 +47,7 @@ void Moov::onChildAdded(Atom *atom) {
     if (atom->getType() == ATOM_TYPE_TRAK) {
         Trak* trak = DYNAMIC_CAST(Trak, atom);
         if (trak) {
-            traks.Add(trak);
+            traks.add(trak);
         }
     }
     Container::onChildAdded(atom);
@@ -57,7 +57,7 @@ void Moov::onChildRemoved(Atom *atom) {
     if (atom->getType() == ATOM_TYPE_TRAK) {
         Trak* trak = DYNAMIC_CAST(Trak, atom);
         if (trak) {
-            traks.Remove(trak);
+            traks.remove(trak);
         }
     }
     Container::onChildRemoved(atom);

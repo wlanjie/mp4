@@ -46,9 +46,9 @@ Stsc::Stsc(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
         return;
     }
     for (unsigned int i = 0; i < entryCount; i++) {
-        UI32 firstChunk = BytesToUInt32BE(&buffer[i * 12]);
-        UI32 samplesPerChunk = BytesToUInt32BE(&buffer[i * 12 + 4]);
-        UI32 sampleDescriptionIndex = BytesToUInt32BE(&buffer[i * 12 + 8]);
+        UI32 firstChunk = bytesToUInt32BE(&buffer[i * 12]);
+        UI32 samplesPerChunk = bytesToUInt32BE(&buffer[i * 12 + 4]);
+        UI32 sampleDescriptionIndex = bytesToUInt32BE(&buffer[i * 12 + 8]);
         if (i) {
             Ordinal prev = i - 1;
             entries[prev].chunkCount = firstChunk - entries[prev].firstChunk;

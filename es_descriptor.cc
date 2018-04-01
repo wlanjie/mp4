@@ -59,17 +59,17 @@ EsDescriptor::EsDescriptor(ByteStream &stream, Size headerSize, Size payloadSize
     auto* substream = new SubStream(stream, offset, payloadSize - Size(offset - start));
     Descriptor* descriptor = nullptr;
     while (DescriptorFactory::createDescriptionFromStream(*substream, descriptor) == SUCCESS) {
-        subDescriptors.Add(descriptor);
+        subDescriptors.add(descriptor);
     }
     substream->release();
 }
 
 EsDescriptor::~EsDescriptor() {
-    subDescriptors.DeleteReferences();
+    subDescriptors.deleteReferences();
 }
 
 Result EsDescriptor::addSubDescriptor(Descriptor *desciptor) {
-    subDescriptors.Add(desciptor);
+    subDescriptors.add(desciptor);
     payloadSize += desciptor->getSize();
     return SUCCESS;
 }
@@ -99,11 +99,11 @@ Result EsDescriptor::writeFields(ByteStream &stream) {
         }
     }
     if (flags & ES_DESCRIPTOR_FLAG_URL) {
-        result = stream.writeUI08((UI08) url.GetLength());
+        result = stream.writeUI08((UI08) url.getLength());
         if (FAILED(result)) {
             return result;
         }
-        result = stream.writeString(url.GetChars());
+        result = stream.writeString(url.getChars());
         if (FAILED(result)) {
             return result;
         }
@@ -120,13 +120,13 @@ Result EsDescriptor::writeFields(ByteStream &stream) {
     }
 
     // write the sub descriptors
-    subDescriptors.Apply(DescriptorListWriter(stream));
+    subDescriptors.apply(DescriptorListWriter(stream));
     return SUCCESS;
 }
 
 const DecoderConfigDescriptor *EsDescriptor::getDecoderConfigDescription() const {
     Descriptor* descriptor = nullptr;
-    auto result = subDescriptors.Find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_CONFIG), descriptor);
+    auto result = subDescriptors.find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_CONFIG), descriptor);
     return SUCCEEDED(result) ? DYNAMIC_CAST(DecoderConfigDescriptor, descriptor) : nullptr;
 }
 

@@ -100,11 +100,11 @@ Container::clone() {
         clone = new Container(type);
     }
 
-    List<Atom>::Item *child_item = children.FirstItem();
+    List<Atom>::Item *child_item = children.firstItem();
     while (child_item) {
-        Atom *child_clone = child_item->GetData()->clone();
+        Atom *child_clone = child_item->getData()->clone();
         if (child_clone) clone->addChild(child_clone);
-        child_item = child_item->GetNext();
+        child_item = child_item->getNext();
     }
 
     return clone;
@@ -122,7 +122,7 @@ Container::readChildren(AtomFactory &atom_factory,
 
     while (SUCCEEDED(atom_factory.createAtomFromStream(stream, bytes_available, atom))) {
         atom->setParent(this);
-        children.Add(atom);
+        children.add(atom);
     }
 
     // restore the saved context
@@ -131,13 +131,13 @@ Container::readChildren(AtomFactory &atom_factory,
 
 Result Container::writeFields(ByteStream &stream) {
     // write all children
-    return children.Apply(AtomListWriter(stream));
+    return children.apply(AtomListWriter(stream));
 }
 
 void Container::onChildChanged(Atom *) {
     // remcompute our size
     UI64 size = getHeaderSize();
-    children.Apply(AtomSizeAdder(size));
+    children.apply(AtomSizeAdder(size));
     setSize(size);
 
     // update our parent

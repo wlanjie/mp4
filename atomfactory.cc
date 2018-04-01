@@ -18,15 +18,15 @@
 namespace mp4 {
 
 AtomFactory::~AtomFactory() {
-    m_TypeHandlers.DeleteReferences();
+    m_TypeHandlers.deleteReferences();
 }
 
 Result AtomFactory::addTypeHandler(TypeHandler *handler) {
-    return m_TypeHandlers.Add(handler);
+    return m_TypeHandlers.add(handler);
 }
 
 Result AtomFactory::removeTypeHandler(TypeHandler *handler) {
-    return m_TypeHandlers.Remove(handler);
+    return m_TypeHandlers.remove(handler);
 }
 
 Result AtomFactory::createAtomFromStream(ByteStream &stream, LargeSize &bytesAvailable, Atom *&atom) {
@@ -301,13 +301,13 @@ Result AtomFactory::createAtomFromStream(ByteStream &stream, UI32 type, UI32 siz
                 break;
 
             default:
-                List<TypeHandler>::Item* item = m_TypeHandlers.FirstItem();
+                List<TypeHandler>::Item* item = m_TypeHandlers.firstItem();
                 while (item) {
-                    TypeHandler* handler = item->GetData();
+                    TypeHandler* handler = item->getData();
                     if (SUCCEEDED(handler->createAtom(type, size32, stream, getContext(), atom))) {
                         break;
                     }
-                    item = item->GetNext();
+                    item = item->getNext();
                 }
                 break;
 

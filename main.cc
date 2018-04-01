@@ -5,8 +5,6 @@
 #include <iostream>
 #include "file.h"
 #include "filebytestream.h"
-#include "filewriter.h"
-#include "mp4.h"
 #include "synthetic_sampletable.h"
 #include "utils.h"
 #include "avc_sample_description.h"
@@ -54,7 +52,7 @@ public:
     static Result create(const char* baseName, FileStorage*& fileStorage);
     ~FileStorage() {
         stream->release();
-        remove(fileName.GetChars());
+        remove(fileName.getChars());
     }
     ByteStream* getStream() { return stream; }
 
@@ -75,7 +73,7 @@ private:
 Result FileStorage::create(const char *baseName, FileStorage *&fileStorage) {
     fileStorage = nullptr;
     auto* object = new FileStorage(baseName);
-    auto result = FileByteStream::create(object->fileName.GetChars(), FileByteStream::STREAM_MODE_WRITE, object->stream);
+    auto result = FileByteStream::create(object->fileName.getChars(), FileByteStream::STREAM_MODE_WRITE, object->stream);
     if (FAILED(result)) {
         return result;
     }
@@ -236,7 +234,7 @@ void addH264Track(FileStorage *storage, Movie* movie) {
 
     UI32 movie_timescale      = 1000;
     UI32 media_timescale      = videoFrameRate;
-    UI64 video_track_duration = ConvertTime(1000*sampleTable->getSampleCount(), media_timescale, movie_timescale);
+    UI64 video_track_duration = convertTime(1000 * sampleTable->getSampleCount(), media_timescale, movie_timescale);
     UI64 video_media_duration = 1000*sampleTable->getSampleCount();
 
     // create a video track
@@ -310,7 +308,7 @@ static void addAacTrack(FileStorage* storage, Movie* movie) {
             storage->getStream()->tell(position);
             DataBuffer sample_data(frame.info.frameLength);
             sample_data.setDataSize(frame.info.frameLength);
-            frame.source->ReadBytes(sample_data.useData(), frame.info.frameLength);
+            frame.source->readBytes(sample_data.useData(), frame.info.frameLength);
             storage->getStream()->write(sample_data.getData(), frame.info.frameLength);
 
             // add the sample to the table
@@ -426,11 +424,11 @@ static void writeSample(const DataBuffer& sample_data,
             nalu_size = *data++;
             data_size--;
         } else if (nalu_length_size == 2) {
-            nalu_size = BytesToInt16BE(data);
+            nalu_size = bytesToInt16BE(data);
             data      += 2;
             data_size -= 2;
         } else if (nalu_length_size == 4) {
-            nalu_size = BytesToInt32BE(data);
+            nalu_size = bytesToInt32BE(data);
             data      += 4;
             data_size -= 4;
         } else {
@@ -535,7 +533,7 @@ static void writeSamples(Track* track, SampleDescription* sdesc, ByteStream* out
     DataBuffer data;
     Ordinal index = 0;
     while (SUCCEEDED(source->readNextSample(sample, data, index))) {
-        auto time = ConvertTime(sample.getCts(), track->getMediaTimeScale(), 1000);
+        auto time = convertTime(sample.getCts(), track->getMediaTimeScale(), 1000);
         printf("pts = %lld, dts = %lld current = %lld duration = %d \n", sample.getCts(), sample.getDts(), time, sample.getDuration());
         writeSample(data, prefix, nalu_length_size, output);
         index++;

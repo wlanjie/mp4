@@ -71,7 +71,7 @@ Result ByteStream::writeDouble(double value) {
     unsigned char buffer[8];
 
     // convert value to bytes
-    BytesFromDoubleBE(buffer, value);
+    bytesFromDoubleBE(buffer, value);
 
     // write bytes to the stream
     return write((void*)buffer, 8);
@@ -81,7 +81,7 @@ Result ByteStream::writeUI64(UI64 value) {
     unsigned char buffer[8];
 
     // convert value to bytes
-    BytesFromUInt64BE(buffer, value);
+    bytesFromUInt64BE(buffer, value);
 
     // write bytes to the stream
     return write((void*)buffer, 8);
@@ -91,7 +91,7 @@ Result ByteStream::writeUI32(UI32 value) {
     unsigned char buffer[4];
 
     // convert value to bytes
-    BytesFromUInt32BE(buffer, value);
+    bytesFromUInt32BE(buffer, value);
 
     // write bytes to the stream
     return write((void*)buffer, 4);
@@ -101,7 +101,7 @@ Result ByteStream::writeUI24(UI32 value) {
     unsigned char buffer[3];
 
     // convert value to bytes
-    BytesFromUInt24BE(buffer, value);
+    bytesFromUInt24BE(buffer, value);
 
     // write bytes to the stream
     return write((void*)buffer, 3);
@@ -111,7 +111,7 @@ Result ByteStream::writeUI16(UI16 value) {
     unsigned char buffer[2];
 
     // convert value to bytes
-    BytesFromUInt16BE(buffer, value);
+    bytesFromUInt16BE(buffer, value);
 
     // write bytes to the stream
     return write((void*)buffer, 2);
@@ -133,7 +133,7 @@ Result ByteStream::readUI64(UI64& value) {
     }
 
     // convert bytes to value
-    value = BytesToUInt64BE(buffer);
+    value = bytesToUInt64BE(buffer);
 
     return SUCCESS;
 }
@@ -150,7 +150,7 @@ Result ByteStream::readDouble(double& value) {
     }
 
     // convert bytes to value
-    value = BytesToDoubleBE(buffer);
+    value = bytesToDoubleBE(buffer);
 
     return SUCCESS;
 }
@@ -167,7 +167,7 @@ Result ByteStream::readUI32(UI32& value) {
     }
 
     // convert bytes to value
-    value = BytesToUInt32BE(buffer);
+    value = bytesToUInt32BE(buffer);
 
     return SUCCESS;
 }
@@ -184,7 +184,7 @@ Result ByteStream::readUI24(UI32& value) {
     }
 
     // convert bytes to value
-    value = BytesToUInt24BE(buffer);
+    value = bytesToUInt24BE(buffer);
 
     return SUCCESS;
 }
@@ -201,7 +201,7 @@ Result ByteStream::readUI16(UI16& value) {
     }
 
     // convert bytes to value
-    value = BytesToUInt16BE(buffer);
+    value = bytesToUInt16BE(buffer);
 
     return SUCCESS;
 }
@@ -260,7 +260,7 @@ Result ByteStream::readNullTerminatedString(String& string) {
         ++size;
     } while (c);
 
-    string.Assign((const char*) buffer.getData(), size);
+    string.assign((const char *) buffer.getData(), size);
     return SUCCESS;
 }
 

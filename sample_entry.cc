@@ -45,7 +45,7 @@ Result SampleEntry::write(ByteStream &stream) {
     if (FAILED(result)) {
         return result;
     }
-    return children.Apply(AtomListWriter(stream));
+    return children.apply(AtomListWriter(stream));
 }
 
 SampleDescription *SampleEntry::toSampleDescription() {
@@ -58,7 +58,7 @@ Atom *SampleEntry::clone() {
 
 void SampleEntry::onChildChanged(Atom *child) {
     UI64 size = getHeaderSize() + getFieldsSize();
-    children.Apply(AtomSizeAdder(size));
+    children.apply(AtomSizeAdder(size));
     size32 += (UI32) size;
     if (parent) {
         parent->onChildChanged(this);
@@ -201,7 +201,7 @@ Result VisualSampleEntry::writeFields(ByteStream &stream) {
 
     // compressor name
     unsigned char compressor_name[32];
-    unsigned int name_length = compressorName.GetLength();
+    unsigned int name_length = compressorName.getLength();
     if (name_length > 31) name_length = 31;
     compressor_name[0] = (unsigned char)name_length;
     for (unsigned int i=0; i<name_length; i++) {
@@ -230,7 +230,7 @@ SampleDescription* VisualSampleEntry::toSampleDescription() {
             width,
             height,
             depth,
-            compressorName.GetChars(),
+            compressorName.getChars(),
             this);
 }
 
@@ -253,7 +253,7 @@ AvcSampleEntry::AvcSampleEntry(UI32 format,
 }
 
 SampleDescription *AvcSampleEntry::toSampleDescription() {
-    return new AvcSampleDescription(type, width, height, depth, compressorName.GetChars(), this);
+    return new AvcSampleDescription(type, width, height, depth, compressorName.getChars(), this);
 }
 
 HevcSampleEntry::HevcSampleEntry(UI32 format,
@@ -271,7 +271,7 @@ HevcSampleEntry::HevcSampleEntry(UI32 format, UI16 width, UI16 height, UI16 dept
 
 SampleDescription *HevcSampleEntry::toSampleDescription() {
     // TODO hevc
-//    return new HevcSampleDescription(type, width, height, depth, compressorName.GetChars(), this);
+//    return new HevcSampleDescription(type, width, height, depth, compressorName.getChars(), this);
     return nullptr;
 }
 

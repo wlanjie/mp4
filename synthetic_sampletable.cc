@@ -13,7 +13,7 @@ SyntheticSampleTable::SyntheticSampleTable(Cardinal chunkSize) :
 }
 
 SyntheticSampleTable::~SyntheticSampleTable() {
-    sampleDescriptions.DeleteReferences();
+    sampleDescriptions.deleteReferences();
 }
 
 Result SyntheticSampleTable::getSample(Ordinal index, Sample &sample) {
@@ -54,12 +54,12 @@ SyntheticSampleTable::getSampleChunkPosition(Ordinal sampleIndex, Ordinal &chunk
 }
 
 Cardinal SyntheticSampleTable::getSampleDescriptionCount() {
-    return sampleDescriptions.ItemCount();
+    return sampleDescriptions.itemCount();
 }
 
 SampleDescription *SyntheticSampleTable::getSampleDescription(Ordinal index) {
     SampleDescriptionHolder* holder;
-    return (SUCCEEDED(sampleDescriptions.Get(index, holder))) ? holder->sampleDescription : nullptr;
+    return (SUCCEEDED(sampleDescriptions.get(index, holder))) ? holder->sampleDescription : nullptr;
 }
 
 Result SyntheticSampleTable::getSampleIndexForTimeStamp(UI64 ts, Ordinal &index) {
@@ -86,7 +86,7 @@ Ordinal SyntheticSampleTable::getNearestSyncSampleIndex(Ordinal index, bool befo
 }
 
 Result SyntheticSampleTable::addSampleDescription(SampleDescription *description, bool transferOwnership) {
-    return sampleDescriptions.Add(new SampleDescriptionHolder(description, transferOwnership));
+    return sampleDescriptions.add(new SampleDescriptionHolder(description, transferOwnership));
 }
 
 Result SyntheticSampleTable::addSample(ByteStream &stream, Position offset, Size size, UI32 duration,

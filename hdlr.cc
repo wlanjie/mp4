@@ -26,7 +26,7 @@ Hdlr::Hdlr(UI32 hdlrType, const char *hdlrName) :
         Atom(ATOM_TYPE_HDLR, FULL_ATOM_HEADER_SIZE, 0, 0),
         handlerType(hdlrType),
         handlerName(hdlrName) {
-    size32 += 20 + handlerName.GetLength() + 1;
+    size32 += 20 + handlerName.getLength() + 1;
     reserved[0] = reserved[1] = reserved[2] = 0;
 }
 
@@ -68,12 +68,12 @@ Result Hdlr::writeFields(ByteStream &stream) {
     if (FAILED(result)) return result;
     result = stream.writeUI32(reserved[2]);
     if (FAILED(result)) return result;
-    UI08 name_size = (UI08) handlerName.GetLength();
+    UI08 name_size = (UI08) handlerName.getLength();
     if (FULL_ATOM_HEADER_SIZE + 20 + name_size > size32) {
         name_size = (UI08) (size32 - FULL_ATOM_HEADER_SIZE + 20);
     }
     if (name_size) {
-        result = stream.write(handlerName.GetChars(), name_size);
+        result = stream.write(handlerName.getChars(), name_size);
         if (FAILED(result)) return result;
     }
 

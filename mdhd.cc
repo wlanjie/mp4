@@ -32,7 +32,7 @@ Mdhd::Mdhd(UI32 creationTime,
         modificationTime(modificationTime),
         timeScale(timeScale),
         duration(duration) {
-    this->language.Assign(language, 3);
+    this->language.assign(language, 3);
     if (duration > 0xFFFFFFFF) {
         version = 1;
         size32 += 12;
@@ -65,9 +65,9 @@ Mdhd::Mdhd(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
     char l2 = ((lang[1]&0x1F));
     if (l0 && l1 && l2) {
         char lang_str[3] = {(char)(l0+0x60), (char)(l1+0x60), (char)(l2+0x60)};
-        language.Assign(lang_str, 3);
+        language.assign(lang_str, 3);
     } else {
-        language.Assign("```", 3);
+        language.assign("```", 3);
     }
 }
 
@@ -96,7 +96,7 @@ Result Mdhd::writeFields(ByteStream &stream) {
 }
 
 UI32 Mdhd::getDurationMs() const {
-    return DurationMsFromUnits(duration, timeScale);
+    return durationMsFromUnits(duration, timeScale);
 }
 
 }

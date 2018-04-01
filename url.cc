@@ -45,11 +45,11 @@ Result Url::writeFields(ByteStream &stream) {
     } else {
         // url (not self contained)
         if (size32 > FULL_ATOM_HEADER_SIZE) {
-            Result result = stream.write(m_Url.GetChars(), m_Url.GetLength() + 1);
+            Result result = stream.write(m_Url.getChars(), m_Url.getLength() + 1);
             if (FAILED(result)) return result;
 
             // pad with zeros if necessary
-            Size padding = size32 - (FULL_ATOM_HEADER_SIZE + m_Url.GetLength() + 1);
+            Size padding = size32 - (FULL_ATOM_HEADER_SIZE + m_Url.getLength() + 1);
             while (padding--) stream.writeUI08(0);
         }
         return SUCCESS;

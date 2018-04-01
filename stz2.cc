@@ -62,7 +62,7 @@ Stz2::Stz2(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
             break;
         case 16:
             for (unsigned int i = 0; i < sampleCount; i++) {
-                entries[i] = BytesToUInt16BE(&buffer[i * 2]);
+                entries[i] = bytesToUInt16BE(&buffer[i * 2]);
             }
             break;
     }

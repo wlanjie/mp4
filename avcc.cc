@@ -27,7 +27,7 @@ Avcc *Avcc::create(Size size, ByteStream &stream) {
         if (cursor + 2 > payloadSize) {
             return nullptr;
         }
-        cursor += 2 + BytesToInt16BE(&payload[cursor]);
+        cursor += 2 + bytesToInt16BE(&payload[cursor]);
         if (cursor > payloadSize) {
             return nullptr;
         }
@@ -40,7 +40,7 @@ Avcc *Avcc::create(Size size, ByteStream &stream) {
         if (cursor + 2 > payloadSize) {
             return nullptr;
         }
-        cursor += 2 + BytesToInt16BE(&payload[cursor]);
+        cursor += 2 + bytesToInt16BE(&payload[cursor]);
         if (cursor > payloadSize) {
             return nullptr;
         }
@@ -61,7 +61,7 @@ Avcc::Avcc(UI32 size, const UI08 *payload) : Atom(ATOM_TYPE_AVCC, size) {
     unsigned int cursor = 6;
     for (unsigned int i = 0; i < numSeqParams; i++) {
         if (cursor + 2 <= payloadSize) {
-            UI16 paramLength = BytesToInt16BE(&payload[cursor]);
+            UI16 paramLength = bytesToInt16BE(&payload[cursor]);
             cursor += 2;
             if (cursor + paramLength <= payloadSize) {
                 sequenceParameters.Append(DataBuffer());
@@ -74,7 +74,7 @@ Avcc::Avcc(UI32 size, const UI08 *payload) : Atom(ATOM_TYPE_AVCC, size) {
     pictureParamters.EnsureCapacity(numPicParams);
     for (unsigned int i = 0; i < numPicParams; i++) {
         if (cursor + 2 <= payloadSize) {
-            UI16 paramLength = BytesToInt16BE(&payload[cursor]);
+            UI16 paramLength = bytesToInt16BE(&payload[cursor]);
             cursor += 2;
             if (cursor + paramLength <= payloadSize) {
                 pictureParamters.Append(DataBuffer());
@@ -174,7 +174,7 @@ void Avcc::updateRawBytes() {
     unsigned int cursor = 6;
     for (unsigned int i = 0; i < sequenceParameters.ItemCount(); i++) {
         UI16 paramLength = (UI16) sequenceParameters[i].getDataSize();
-        BytesFromUInt16BE(&payload[cursor], paramLength);
+        bytesFromUInt16BE(&payload[cursor], paramLength);
         cursor += 2;
         CopyMemory(&payload[cursor], sequenceParameters[i].getData(), paramLength);
         cursor += paramLength;
@@ -182,7 +182,7 @@ void Avcc::updateRawBytes() {
     payload[cursor++] = (UI08) pictureParamters.ItemCount();
     for (unsigned int i = 0; i < pictureParamters.ItemCount(); i++) {
         UI16 paramLength = (UI16) pictureParamters[i].getDataSize();
-        BytesFromUInt16BE(&payload[cursor], paramLength);
+        bytesFromUInt16BE(&payload[cursor], paramLength);
         cursor += 2;
         CopyMemory(&payload[cursor], pictureParamters[i].getData(), paramLength);
         cursor += paramLength;

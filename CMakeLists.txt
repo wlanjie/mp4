@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD 11)
 #set(CMAKE_BUILD_TYPE Release)
 
 set(SOURCE_FILES
-        mp4.cc
         results.cc
         atomfactory.cc
         atom.cc
@@ -20,7 +19,6 @@ set(SOURCE_FILES
         url.cc
         ftyp.cc
         stdfilebytestream.cc
-        filewriter.cc
         moov.cc
         mvhd.cc
         trak.cc

@@ -212,7 +212,7 @@ UI64 Track::getDuration() const {
 
 UI32 Track::getDurationMs() const {
     auto duration = trakAtom->getDuration();
-    return DurationMsFromUnits(duration, movieTimeScale);
+    return durationMsFromUnits(duration, movieTimeScale);
 }
 
 UI32 Track::getWidth() const {
@@ -240,7 +240,7 @@ Result Track::readSample(Ordinal index, Sample& sample, DataBuffer& data) {
 }
 
 Result Track:: getSampleIndexForTimeStampMs(UI32 tsMs, Ordinal& index) {
-    auto ts = ConvertTime(tsMs, 1000, getMediaTimeScale());
+    auto ts = convertTime(tsMs, 1000, getMediaTimeScale());
     return sampleTable->getSampleIndexForTimeStamp(ts, index);
 }
 
@@ -271,7 +271,7 @@ void Track::setMovieTimeScale(UI32 timeScale) {
     if (movieTimeScale == 0) {
         return;
     }
-    trakAtom->setDuration(ConvertTime(trakAtom->getDuration(), movieTimeScale, timeScale));
+    trakAtom->setDuration(convertTime(trakAtom->getDuration(), movieTimeScale, timeScale));
     movieTimeScale = timeScale;
 }
 
@@ -288,7 +288,7 @@ UI64 Track::getMediaDuration() const {
 const char *Track::getTrackLanguage() const {
     auto mdhd = DYNAMIC_CAST(Mdhd, trakAtom->findChild("mdia/mdhd"));
     if (mdhd) {
-        return mdhd->getLanguage().GetChars();
+        return mdhd->getLanguage().getChars();
     }
     return nullptr;
 }

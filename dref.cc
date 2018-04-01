@@ -25,7 +25,7 @@ Dref::Dref(Atom **refs, Cardinal refsCount) :
         Container(ATOM_TYPE_DREF, (UI32) 0, (UI32) 0) {
     size32 += 4;
     for (unsigned int i = 0; i < refsCount; ++i) {
-        children.Add(refs[i]);
+        children.add(refs[i]);
         size32 += (UI32) refs[i]->getSize();
     }
 }
@@ -41,15 +41,15 @@ Dref::Dref(UI32 size,
     while (entryCount--) {
         Atom* atom;
         while (SUCCEEDED(factory.createAtomFromStream(stream, bytesAvailable, atom))) {
-            children.Add(atom);
+            children.add(atom);
         }
     }
 }
 
 Result Dref::writeFields(ByteStream &stream) {
-    Result result = stream.writeUI32(children.ItemCount());
+    Result result = stream.writeUI32(children.itemCount());
     if (FAILED(result)) return result;
-    return children.Apply(AtomListWriter(stream));
+    return children.apply(AtomListWriter(stream));
 }
 
 }

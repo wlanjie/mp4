@@ -21,7 +21,7 @@ DecoderConfigDescriptor::DecoderConfigDescriptor(UI08 streamType,
         maxBitRate(maxBitRate),
         averageBitRate(avgBitRate) {
     if (dsi) {
-        subDescriptors.Add(dsi);
+        subDescriptors.add(dsi);
         payloadSize += dsi->getSize();
         headerSize = minHeaderSize(payloadSize);
     }
@@ -44,13 +44,13 @@ DecoderConfigDescriptor::DecoderConfigDescriptor(ByteStream &stream, Size header
     auto* subStream = new SubStream(stream, start + 13, payloadSize);
     Descriptor* descriptor = nullptr;
     while (DescriptorFactory::createDescriptionFromStream(*subStream, descriptor) == SUCCESS) {
-        subDescriptors.Add(descriptor);
+        subDescriptors.add(descriptor);
     }
     subStream->release();
 }
 
 DecoderConfigDescriptor::~DecoderConfigDescriptor() {
-    subDescriptors.DeleteReferences();
+    subDescriptors.deleteReferences();
 }
 
 Result DecoderConfigDescriptor::writeFields(ByteStream &stream) {
@@ -60,13 +60,13 @@ Result DecoderConfigDescriptor::writeFields(ByteStream &stream) {
     stream.writeUI24(bufferSize);
     stream.writeUI32(maxBitRate);
     stream.writeUI32(averageBitRate);
-    subDescriptors.Apply(DescriptorListWriter(stream));
+    subDescriptors.apply(DescriptorListWriter(stream));
     return 0;
 }
 
 const DecoderSpecificInfoDescriptor *DecoderConfigDescriptor::getDecoderSpecificInfoDescriptor() const {
     Descriptor* descriptor = nullptr;
-    auto result = subDescriptors.Find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO), descriptor);
+    auto result = subDescriptors.find(DescriptorFinder(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO), descriptor);
     return SUCCEEDED(result) ? DYNAMIC_CAST(DecoderSpecificInfoDescriptor, descriptor) : nullptr;
 }
 

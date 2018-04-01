@@ -62,7 +62,7 @@ const String& String::operator=(const char* s) {
         m_Chars = &EmptyString;
         m_Length = 0;
     } else {
-        Assign(s, (Size)StringLength(s));
+        assign(s, (Size) StringLength(s));
     }
 
     return *this;
@@ -85,7 +85,7 @@ bool String::operator==(const char* s) const {
     return true;
 }
 
-void String::Assign(const char* s, Size size) {
+void String::assign(const char *s, Size size) {
     if (m_Chars != &EmptyString) delete[] m_Chars;
     m_Length = size;
     m_Chars = new char[m_Length+1];
@@ -93,8 +93,8 @@ void String::Assign(const char* s, Size size) {
     m_Chars[size] = '\0';
 }
 
-int String::Find(char c, unsigned int start) const {
-    const char* chars = GetChars();
+int String::find(char c, unsigned int start) const {
+    const char* chars = getChars();
     for (unsigned int i=start; i<m_Length; i++) {
         if (chars[i] == c) return i;
     }

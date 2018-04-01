@@ -8,7 +8,6 @@
 #include "atom.h"
 #include "atomfactory.h"
 #include "ftyp.h"
-#include "mp4.h"
 #include "movie.h"
 
 namespace mp4 {

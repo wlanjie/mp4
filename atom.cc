@@ -209,7 +209,7 @@ Result AtomParent::removeChild(Atom *child) {
     if (child->getParent() != this) return ERROR_INVALID_PARAMETERS;
 
     // remove the child
-    Result result = children.Remove(child);
+    Result result = children.remove(child);
     if (FAILED(result)) return result;
 
     // notify that child that it is orphaned
@@ -238,7 +238,7 @@ Result AtomParent::deleteChild(Atom::Type type, Ordinal index /* = 0 */) {
 
 Atom *AtomParent::getChild(Atom::Type type, Ordinal index /* = 0 */) const {
     Atom *atom;
-    Result result = children.Find(AtomFinder(type, index), atom);
+    Result result = children.find(AtomFinder(type, index), atom);
     if (SUCCEEDED(result)) {
         return atom;
     } else {
@@ -247,10 +247,10 @@ Atom *AtomParent::getChild(Atom::Type type, Ordinal index /* = 0 */) const {
 }
 
 Atom *AtomParent::getChild(const UI08 *uuid, Ordinal index /* = 0 */) const {
-    for (List<Atom>::Item *item = children.FirstItem();
+    for (List<Atom>::Item *item = children.firstItem();
          item;
-         item = item->GetNext()) {
-        Atom *atom = item->GetData();
+         item = item->getNext()) {
+        Atom *atom = item->getData();
 //        if (atom->getType() == ATOM_TYPE_UUID) {
 //            UuidAtom *uuid_atom = DYNAMIC_CAST(UuidAtom, atom);
 //            if (CompareMemory(uuid_atom->getUuid(), uuid, 16) == 0) {
@@ -288,7 +288,7 @@ Atom *AtomParent::findChild(const char *path,
         } else if (end == path + 32) {
             // UUID
             is_uuid = true;
-            ParseHex(path, uuid, sizeof(uuid));
+            parseHex(path, uuid, sizeof(uuid));
         } else {
             // malformed path
             return NULL;
@@ -352,8 +352,8 @@ Atom *AtomParent::findChild(const char *path,
 }
 
 Result AtomParent::copyChildren(AtomParent &destination) const {
-    for (List<Atom>::Item *child = children.FirstItem(); child; child = child->GetNext()) {
-        Atom *child_clone = child->GetData()->clone();
+    for (List<Atom>::Item *child = children.firstItem(); child; child = child->getNext()) {
+        Atom *child_clone = child->getData()->clone();
         destination.addChild(child_clone);
     }
 
@@ -367,19 +367,19 @@ Result AtomParent::addChild(Atom *child, int position) {
     Result result;
     if (position == -1) {
         // insert at the tail
-        result = children.Add(child);
+        result = children.add(child);
     } else if (position == 0) {
         // insert at the head
-        result = children.Insert(NULL, child);
+        result = children.insert(NULL, child);
     } else {
         // insert after <n-1>
-        List<Atom>::Item* insertion_point = children.FirstItem();
+        List<Atom>::Item* insertion_point = children.firstItem();
         unsigned int count = position;
         while (insertion_point && --count) {
-            insertion_point = insertion_point->GetNext();
+            insertion_point = insertion_point->getNext();
         }
         if (insertion_point) {
-            result = children.Insert(insertion_point, child);
+            result = children.insert(insertion_point, child);
         } else {
             result = ERROR_OUT_OF_RANGE;
         }

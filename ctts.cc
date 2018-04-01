@@ -36,8 +36,8 @@ Ctts::Ctts(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
         return;
     }
     for (unsigned i = 0; i < entryCount; i++) {
-        entries[i].sampleCount = BytesToUInt32BE(&buffer[i * 8]);
-        UI32 offset = BytesToUInt32BE(&buffer[i * 8 + 4]);
+        entries[i].sampleCount = bytesToUInt32BE(&buffer[i * 8]);
+        UI32 offset = bytesToUInt32BE(&buffer[i * 8 + 4]);
         entries[i].sampleOffset = offset;
     }
     delete[] buffer;

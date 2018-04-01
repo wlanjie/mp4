@@ -51,7 +51,7 @@ public:
     UI32 getHorizResolution() { return horizResolution; }
     UI32 getVertResolution() { return vertResolution; }
     UI16 getDepth() { return depth; }
-    const char* getCompressorName() { return compressorName.GetChars(); }
+    const char* getCompressorName() { return compressorName.getChars(); }
 
     SampleDescription* toSampleDescription();
 
