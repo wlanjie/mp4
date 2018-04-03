@@ -2,7 +2,7 @@
 // Created by wlanjie on 2018/2/7.
 //
 
-#include "string.h"
+#include "character.h"
 #include "utils.h"
 
 namespace mp4 {

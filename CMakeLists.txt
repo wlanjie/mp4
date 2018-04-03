@@ -11,7 +11,7 @@ set(SOURCE_FILES
         atomfactory.cc
         atom.cc
         bytestream.cc
-        string.cc
+        character.cc
         utils.cc
         databuffer.cc
         container.cc
@@ -59,7 +59,8 @@ set(SOURCE_FILES
         bit_stream.cc
         sl_config_descriptor.cc
         mp4_audio_info.cc
-        es_descriptor.cc sample_source.cpp sample_source.h)
+        es_descriptor.cc
+        sample_source.cpp)
 add_library(mp4 ${SOURCE_FILES})
 
 string(TOLOWER sample binary_name)

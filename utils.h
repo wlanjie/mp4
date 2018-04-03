@@ -7,10 +7,10 @@
 
 #include <cstdarg>
 #include <cstdio>
-#include "string.h"
+#include <string.h>
+#include "character.h"
 #include "types.h"
 #include "list.h"
-#include "config.h"
 #include "databuffer.h"
 
 namespace mp4 {
@@ -86,29 +86,14 @@ UI64 convertTime(UI64 timeValue, UI32 fromTimeScale, UI32 toTimeScale);
 
 Result System_GenerateRandomBytes(UI08* buffer, Size buffer_size);
 
-#if defined (CONFIG_HAVE_STDIO_H)
-#include <stdio.h>
-#endif
-
-#if defined (CONFIG_HAVE_SNPRINTF)
 #define FormatString snprintf
-#else
-int FormatString(char* str, Size size, const char* format, ...);
-#endif
-#if defined(CONFIG_HAVE_VSNPRINTF)
 #define FormatStringVN(s,c,f,a) vsnprintf(s,c,f,a)
-#else
-extern int FormatStringVN(char *buffer, size_t count, const char *format, va_list argptr);
-#endif
 
-#if defined (CONFIG_HAVE_STRING_H)
-#include <string.h>
 #define StringLength(x) strlen(x)
 #define CopyMemory(x,y,z) memcpy(x,y,z)
 #define CompareMemory(x, y, z) memcmp(x, y, z)
 #define SetMemory(x,y,z) memset(x,y,z)
 #define CompareStrings(x,y) strcmp(x,y)
-#endif
 
 unsigned char hexNibble(char c);
 char nibbleHex(unsigned int nibble);

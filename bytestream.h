@@ -7,7 +7,7 @@
 
 #include "interfaces.h"
 #include "types.h"
-#include "string.h"
+#include "character.h"
 #include "results.h"
 #include "databuffer.h"
 
