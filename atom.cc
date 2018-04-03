@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "container.h"
 #include "debug.h"
+#include "log.h"
 
 namespace mp4 {
 
@@ -108,6 +109,13 @@ Result Atom::writeHeader(ByteStream &stream) {
     result = stream.writeUI32(size32);
     if (FAILED(result)) return result;
 
+    char name[8];
+    name[0] = '[';
+    formatFourCharsPrintable(&name[1], type);
+    name[5] = ']';
+    name[6] = 'm';
+    name[7] = '\0';
+    LOGV("write ----- name = %s %d\n", name, type);
     // write the type
     result = stream.writeUI32(type);
     if (FAILED(result)) return result;
@@ -132,10 +140,10 @@ Result Atom::writeHeader(ByteStream &stream) {
 Result Atom::write(ByteStream &stream) {
     Result result;
 
-#if defined(DEBUG)
-    Position before;
-    stream.tell(before);
-#endif
+//#if defined(DEBUG)
+//    Position before;
+//    stream.tell(before);
+//#endif
 
     // write the header
     result = writeHeader(stream);
@@ -146,24 +154,12 @@ Result Atom::write(ByteStream &stream) {
     if (FAILED(result)) return result;
 
 #if defined(DEBUG)
-    Position after;
-    stream.tell(after);
-    UI64 atom_size = getSize();
-    if (after-before != atom_size) {
-        debug("ERROR: atom size mismatch (declared size=%d, actual size=%d)\n",
-                  (UI32)atom_size, (UI32)(after-before));
-        Atom* atom = this;
-        while (atom) {
-            char name[7];
-            name[0] = '[';
-            FormatFourCharsPrintable(&name[1], atom->getType());
-            name[5] = ']';
-            name[6] = '\0';
-            debug("       while writing %s\n", name);
-            atom = DYNAMIC_CAST(Atom, atom->getParent());
-        }
-        ASSERT(after-before == atom_size);
-    }
+    char name[7];
+    name[0] = '[';
+    formatFourCharsPrintable(&name[1], getType());
+    name[5] = ']';
+    name[6] = '\0';
+    LOGV("name = %s\n", name);
 #endif
 
     return SUCCESS;

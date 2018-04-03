@@ -173,11 +173,12 @@ Result FileByteStream::create(const char* name, FileByteStream::Mode mode, ByteS
     return AndroidFileByteStream::create(NULL, name, mode, stream);
 }
 
-#if !defined(CONFIG_NO_EXCEPTIONS)
 FileByteStream::FileByteStream(const char* name, FileByteStream::Mode mode) {
-    ByteStream* stream = NULL;
+    ByteStream* stream = nullptr;
     Result result = AndroidFileByteStream::create(this, name, mode, stream);
-//    if (FAILED(result)) throw Exception(result);
+    if (FAILED(result)) {
+        return;
+    }
 
     delegate = stream;
 }

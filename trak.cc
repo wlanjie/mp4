@@ -8,6 +8,8 @@
 #include "smhd.h"
 #include "dref.h"
 #include "url.h"
+#include "log.h"
+#include "utils.h"
 
 namespace mp4 {
 
@@ -68,6 +70,29 @@ Trak::Trak(SampleTable* sampleTable,
     }
     mdia->addChild(minf);
     addChild(mdia);
+
+#if defined(DEBUG)
+    for (List<Atom>::Item* item = mdia->getChildren().firstItem(); item; item = item->getNext()) {
+        auto* atom = item->getData();
+        char name[8];
+        name[0] = '[';
+        formatFourCharsPrintable(&name[1], atom->getType());
+        name[5] = ']';
+        name[6] = 'm';
+        name[7] = '\0';
+        LOGV("name = %s\n", name);
+    }
+    for (List<Atom>::Item* item = getChildren().firstItem(); item; item = item->getNext()) {
+        auto* atom = item->getData();
+        char name[8];
+        name[0] = '[';
+        formatFourCharsPrintable(&name[1], atom->getType());
+        name[5] = ']';
+        name[6] = 't';
+        name[7] = '\0';
+        LOGV("name = %s\n", name);
+    }
+#endif
 }
 
 Trak::Trak(UI32 size, ByteStream &stream, AtomFactory &factory) :

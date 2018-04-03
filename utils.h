@@ -5,8 +5,8 @@
 #ifndef MP4_UTILS_H
 #define MP4_UTILS_H
 
-#include <cstdarg>
-#include <cstdio>
+#include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 #include "character.h"
 #include "types.h"

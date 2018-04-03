@@ -5,7 +5,7 @@
 #ifndef MP4_DEBUG_H
 #define MP4_DEBUG_H
 
-#include <cstdarg>
+#include <stdarg.h>
 #include "utils.h"
 
 namespace mp4 {

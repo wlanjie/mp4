@@ -3,6 +3,7 @@
 //
 
 #include "file.h"
+#include "log.h"
 
 namespace mp4 {
 
@@ -80,6 +81,7 @@ Result File::write(ByteStream &stream) {
     }
     for (List<Atom>::Item* item = getChildren().firstItem(); item; item = item->getNext()) {
         auto* atom = item->getData();
+        LOGV("mp4 size = %lld\n", atom->getSize());
         if (atom->getType() != ATOM_TYPE_MDAT && atom->getType() != ATOM_TYPE_FTYP && atom->getType() != ATOM_TYPE_MOOV) {
             atom->write(stream);
         }

@@ -59,4 +59,7 @@ LOCAL_SRC_FILES := \
 	  es_descriptor.cc \
 	  android_file_byte_stream.cc \
 
+LOCAL_LDLIBS    += -llog
+LOCAL_LDLIBS    += -landroid
+
 include $(BUILD_SHARED_LIBRARY)

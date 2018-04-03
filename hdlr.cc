@@ -4,6 +4,7 @@
 
 #include "hdlr.h"
 #include "utils.h"
+#include "log.h"
 
 namespace mp4 {
 
@@ -22,10 +23,11 @@ Hdlr *Hdlr::create(Size size, ByteStream &stream) {
     return new Hdlr(size, version, flags, stream);
 }
 
-Hdlr::Hdlr(UI32 hdlrType, const char *hdlrName) :
+Hdlr::Hdlr(Atom::Type hdlrType, const char *hdlrName) :
         Atom(ATOM_TYPE_HDLR, FULL_ATOM_HEADER_SIZE, 0, 0),
         handlerType(hdlrType),
         handlerName(hdlrName) {
+    LOGV("hdlrType = %d hdlrName = %s\n", hdlrType, hdlrName);
     size32 += 20 + handlerName.getLength() + 1;
     reserved[0] = reserved[1] = reserved[2] = 0;
 }
@@ -57,6 +59,7 @@ Hdlr::Hdlr(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
 }
 
 Result Hdlr::writeFields(ByteStream &stream) {
+    LOGV("write hldr fields\n");
     Result result;
     result = stream.writeUI32(0);
     if (FAILED(result)) return result;
@@ -80,6 +83,7 @@ Result Hdlr::writeFields(ByteStream &stream) {
     // pad with zeros if necessary
     Size padding = size32 - (FULL_ATOM_HEADER_SIZE + 20 + name_size);
     while (padding--) stream.writeUI08(0);
+    LOGV("write hldr fields done\n");
     return SUCCESS;
 }
 

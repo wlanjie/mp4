@@ -14,9 +14,10 @@ const UI32 HANDLER_TYPE_VIDE = ATOM_TYPE('v','i','d','e');
 
 class Hdlr : public Atom {
 public:
+
     static Hdlr* create(Size size, ByteStream& stream);
 
-    Hdlr(UI32 hdlrType, const char* hdlrName);
+    Hdlr(Atom::Type hdlrType, const char* hdlrName);
     virtual Result writeFields(ByteStream& stream);
     UI32 getHandlerType() { return handlerType; }
 private:
