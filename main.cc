@@ -378,7 +378,10 @@ int writeVideo() {
     file.setFileType(FILE_BRAND_MP42, 1, &brands[0], brands.ItemCount());
     addH264Track(storage, movie);
     addAacTrack(storage, movie);
-    file.write(*output);
+    result = file.write(*output);
+    if (FAILED(result)) {
+        printf("write to file error");
+    }
     output->release();
     delete storage;
     return 0;

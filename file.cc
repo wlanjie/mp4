@@ -134,7 +134,7 @@ Result File::write(ByteStream &stream) {
     stream.writeUI32(ATOM_TYPE_MDAT);
 
     // write all tracks and restore the chunk offsets to their backed-up values
-    for (List<Track>::Item* item = movie->getTracks().firstItem(); item; item = item->getNext()) {
+    for (List<Track>::Item* item = movie->getTracks().firstItem(); item; item = item->getNext(), ++t) {
         auto* track = item->getData();
         auto* trak = track->useTrakAtom();
         result = trak->setChunkOffsets(*trakChunkOffsetsBackup[t]);
