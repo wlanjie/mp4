@@ -136,7 +136,7 @@ Result AtomSampleTable::getSampleIndexForTimeStamp(UI64 ts, Ordinal &sampleIndex
 }
 
 Ordinal AtomSampleTable::getNearestSyncSampleIndex(Ordinal index, bool before) {
-    if (!stts) {
+    if (!stss) {
         return index;
     }
     index += 1;

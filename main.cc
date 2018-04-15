@@ -256,7 +256,7 @@ void addH264Track(FileStorage *storage, Movie* movie) {
 }
 
 static void addAacTrack(FileStorage* storage, Movie* movie) {
-    const char* inputName = "/Users/wlanjie/Desktop/test.aac";
+    const char* inputName = "/Users/wlanjie/Desktop/mp4.aac";
     ByteStream* input;
     auto result = FileByteStream::create(inputName, FileByteStream::STREAM_MODE_READ, input);
     if (FAILED(result)) {
@@ -669,12 +669,15 @@ WriteSamples(Track*             track,
     unsigned int sampling_frequency_index = getSamplingFrequencyIndex(audio_desc->getSampleRate());
     unsigned int channel_configuration    = audio_desc->getChannelCount();
 
+    SampleSource *source = new TrackSampleSource(track);
+    source->seekToTime(5000, true);
     Sample     sample;
     DataBuffer data;
     Ordinal    index = 0;
-    while (SUCCEEDED(track->readSample(index, sample, data))) {
+    while (SUCCEEDED(source->readNextSample(sample, data, index))) {
         WriteAdtsHeader(output, sample.getSize(), sampling_frequency_index, channel_configuration);
         output->write(data.getData(), data.getDataSize());
+        printf("size = %d\n", data.getDataSize());
         index++;
     }
 }
