@@ -3,6 +3,7 @@
 //
 
 #include "sample_source.h"
+#include "utils.h"
 
 namespace mp4 {
 
@@ -31,7 +32,7 @@ Result TrackSampleSource::readNextSample(Sample &sample, DataBuffer &buffer, UI3
     return result;
 }
 
-Result TrackSampleSource::seekToTime(UI32 timeMs, bool before) {
+Result TrackSampleSource::seekToTime(UI64 timeMs, bool before) {
     Ordinal sampleIndex = 0;
     auto result = track->getSampleIndexForTimeStampMs(timeMs, sampleIndex);
     if (FAILED(result)) {
@@ -45,6 +46,18 @@ Result TrackSampleSource::seekToTime(UI32 timeMs, bool before) {
         return ERROR_OUT_OF_RANGE;
     }
     this->sampleIndex = sampleIndex;
+    return result;
+}
+
+Result TrackSampleSource::getNextSampleTime(SI64& timeMs) {
+    UI64 timeStamp;
+    timeMs = -1;
+    Result result = ERROR_INTERNAL;
+    if (track->getSampleTable()) {
+        result = track->getSampleTable()->getSampleTimeStamp(sampleIndex, timeStamp);
+        if (result == SUCCESS)
+            timeMs = convertTime(timeStamp, track->getMediaTimeScale(), 1000);
+    }
     return result;
 }
 

@@ -135,6 +135,28 @@ Result AtomSampleTable::getSampleIndexForTimeStamp(UI64 ts, Ordinal &sampleIndex
     return stts ? stts->getSampleIndexForTimeStamp(ts, sampleIndex) : FAILURE;
 }
 
+Result AtomSampleTable::getSampleTimeStamp(Ordinal sampleIndex, UI64& ts) {
+    UI32 ctsOffset = 0;
+    UI32 duration = 0;
+    Result result = SUCCESS;
+    ts = 0;
+    sampleIndex++;
+    if (stts) {
+        result = stts->getDts(sampleIndex, ts, &duration);
+        if (FAILED(result)) {
+            return result;
+        }
+    }
+    if (ctts) {
+        result = ctts->getCtsOffset(sampleIndex, ctsOffset);
+        if (FAILED(result)) {
+            return result;
+        }
+        ts += ctsOffset;
+    }
+    return result;
+}
+
 Ordinal AtomSampleTable::getNearestSyncSampleIndex(Ordinal index, bool before) {
     if (!stss) {
         return index;

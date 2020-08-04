@@ -239,7 +239,7 @@ Result Track::readSample(Ordinal index, Sample& sample, DataBuffer& data) {
     return sample.readData(data);
 }
 
-Result Track:: getSampleIndexForTimeStampMs(UI32 tsMs, Ordinal& index) {
+Result Track:: getSampleIndexForTimeStampMs(UI64 tsMs, Ordinal& index) {
     auto ts = convertTime(tsMs, 1000, getMediaTimeScale());
     return sampleTable->getSampleIndexForTimeStamp(ts, index);
 }

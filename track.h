@@ -60,7 +60,7 @@ public:
     Cardinal getSampleCount() const;
     Result getSample(Ordinal index, Sample& sample);
     Result readSample(Ordinal index, Sample& sample, DataBuffer& data);
-    Result getSampleIndexForTimeStampMs(UI32 tsMs, Ordinal& index);
+    Result getSampleIndexForTimeStampMs(UI64 tsMs, Ordinal& index);
     Ordinal getNearestSyncSampleIndex(Ordinal index, bool before = true);
     SampleDescription* getSampleDescription(Ordinal index);
     Cardinal getSampleDescriptionCount();
