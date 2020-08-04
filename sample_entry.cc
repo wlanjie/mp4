@@ -324,7 +324,7 @@ Size AudioSampleEntry::getFieldsSize() {
     auto size = SampleEntry::getFieldsSize() + 20;
     if (qtVersion == 1) {
         size += 16;
-    } else {
+    } else if (qtVersion == 2){
         size += 36 + qtV2Extension.getDataSize();
     }
     return size;

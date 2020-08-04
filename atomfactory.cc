@@ -222,6 +222,11 @@ Result AtomFactory::createAtomFromStream(ByteStream &stream, UI32 type, UI32 siz
                 atom = Stss::create(size32, stream);
                 break;
 
+            case ATOM_TYPE_ESDS:
+                if (atomIsLarge) return ERROR_INVALID_FORMAT;
+                atom = Esds::create(size32, stream);
+                break;
+
             case ATOM_TYPE_AVCC:
                 if (atomIsLarge) return ERROR_INVALID_FORMAT;
                 atom = Avcc::create(size32, stream);
