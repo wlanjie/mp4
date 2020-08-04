@@ -34,9 +34,9 @@ Esds::Esds(UI32 size, UI08 version, UI32 flags, ByteStream &stream) :
         Atom(ATOM_TYPE_ESDS, size, version, flags) {
     Descriptor* descriptor = nullptr;
     if (DescriptorFactory::createDescriptionFromStream(stream, descriptor) == SUCCESS) {
-        descriptor = DYNAMIC_CAST(EsDescriptor, descriptor);
+        this->descriptor = DYNAMIC_CAST(EsDescriptor, descriptor);
     } else {
-        descriptor = nullptr;
+        this->descriptor = nullptr;
     }
 }
 

@@ -44,7 +44,15 @@ public:
      * @param before
      * @return
      */
-    virtual Result seekToTime(UI32 timeMs, bool before = true) = 0;
+    virtual Result seekToTime(UI64 timeMs, bool before = true) = 0;
+
+    /**
+     * get the next sample timestamp in milliseconds
+     * @param timeMs
+     * @param before
+     * @return
+     */
+    virtual Result getNextSampleTime(SI64& timeMs) = 0;
 
     /**
      * return a sample description by index
@@ -60,7 +68,8 @@ public:
     UI32 getTimeScale() override ;
     UI32 getDurationMs() override ;
     Result readNextSample(Sample& sample, DataBuffer& buffer, UI32& trackId) override ;
-    Result seekToTime(UI32 timeMs, bool before = true);
+    Result seekToTime(UI64 timeMs, bool before = true) override ;
+    Result getNextSampleTime(SI64& timeMs) override ;
     SampleDescription* getSampleDescription(Ordinal index) override ;
 private:
     Track* track;

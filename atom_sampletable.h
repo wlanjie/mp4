@@ -21,6 +21,7 @@ public:
     virtual Cardinal getSampleDescriptionCount();
     virtual Result getSampleChunkPosition(Ordinal sampleIndex, Ordinal& chunkIndex, Ordinal& positionInChunk);
     virtual Result getSampleIndexForTimeStamp(UI64 ts, Ordinal& sampleIndex);
+    virtual Result getSampleTimeStamp(Ordinal sampleIndex, UI64& ts);
     virtual Ordinal getNearestSyncSampleIndex(Ordinal index, bool before = true);
     virtual Result getChunkForSample(Ordinal sampleIndex, Ordinal& chunkIndex, Ordinal& positionInChunk, Ordinal& sampleDescriptionIndex);
     virtual Result getChunkOffset(Ordinal chunkIndex, Position& offset);

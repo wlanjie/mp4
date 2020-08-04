@@ -22,6 +22,7 @@ public:
     virtual Cardinal getSampleDescriptionCount();
     virtual SampleDescription* getSampleDescription(Ordinal index);
     virtual Result getSampleIndexForTimeStamp(UI64 ts, Ordinal& index);
+    virtual Result getSampleTimeStamp(Ordinal sampleIndex, UI64& ts);
     virtual Ordinal getNearestSyncSampleIndex(Ordinal index, bool before);
     /**
      * Add a sample description to the sample table.

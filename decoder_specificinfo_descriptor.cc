@@ -13,7 +13,7 @@ DecoderSpecificInfoDescriptor::DecoderSpecificInfoDescriptor(const DataBuffer &d
 }
 
 DecoderSpecificInfoDescriptor::DecoderSpecificInfoDescriptor(ByteStream &stream, Size size, Size payloadSize) :
-        Descriptor(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO, headerSize, payloadSize) {
+        Descriptor(DESCRIPTOR_TAG_DECODER_SPECIFIC_INFO, size, payloadSize) {
     info.setDataSize(payloadSize);
     stream.read(info.useData(), payloadSize);
 }

@@ -47,7 +47,7 @@ public:
     Result writePartial(const void* buffer, Size bytesToWrite, Size& bytesWritten);
     Result seek(Position position);
     Result tell(Position& position) {
-        this->position = position;
+        position = this->position;
         return SUCCESS;
     }
     Result getSize(LargeSize& size) {

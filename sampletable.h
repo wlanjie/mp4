@@ -30,6 +30,7 @@ public:
     virtual Cardinal getSampleDescriptionCount() = 0;
     virtual SampleDescription* getSampleDescription(Ordinal index) = 0;
     virtual Result getSampleIndexForTimeStamp(UI64 ts, Ordinal& index) = 0;
+    virtual Result getSampleTimeStamp(Ordinal sampleIndex, UI64& ts) = 0;
     virtual Ordinal getNearestSyncSampleIndex(Ordinal index, bool before = true) = 0;
 };
 

@@ -66,6 +66,10 @@ Result SyntheticSampleTable::getSampleIndexForTimeStamp(UI64 ts, Ordinal &index)
     return ERROR_NOT_SUPPORTED;
 }
 
+Result SyntheticSampleTable::getSampleTimeStamp(Ordinal sampleIndex, UI64& ts) {
+    return ERROR_NOT_SUPPORTED;
+}
+
 Ordinal SyntheticSampleTable::getNearestSyncSampleIndex(Ordinal index, bool before) {
     if (before) {
         for (int i = index; i > 0; i--) {
